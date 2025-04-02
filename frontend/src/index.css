@@ -183,3 +183,9 @@ button:focus-visible {
     @apply bg-background text-foreground;
   }
 }
+
+
+.tab[data-state="active"] {
+  @apply text-pink-500 font-semibold;
+}
+
