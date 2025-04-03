@@ -13,3 +13,13 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Profile {
+  email String @unique
+  password String 
+  Name String?
+  image String?
+  color Int?
+  ProfileSetup Boolean  @default(false)
+
+}
