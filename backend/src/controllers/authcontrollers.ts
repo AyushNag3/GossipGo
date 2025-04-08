@@ -1,7 +1,21 @@
 import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs"
+import { Jwt } from "jsonwebtoken";
 import { PrismaClient } from '@prisma/client'
-const prisma = PrismaClient() ;
+let jwt = require('jsonwebtoken');
+const prisma = new PrismaClient() ;
+const JWT_SECRET = process.env.JWT_KEY
+const createToken = (email:String,userId: number) => {
+  jwt.sign( {
+     data : {
+        email, userId
+     }
+    },
+     JWT_SECRET, { expiresIn: 60 * 60 }
+  )
+}
+
+
 export const signup = async(req:Request, res:Response, next:NextFunction) => {
  try {
     const email = req.body.email ; 
