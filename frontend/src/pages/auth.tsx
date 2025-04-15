@@ -15,10 +15,9 @@ export const Auth = () => {
     const handlesignup = () => {
 
     }
-
     return <>
     <div className="h-[100vh] w-[100vw] flex items-center justify-center">
-       <div className="mr-52 h-[80vh]  bg-white border-2 border-white shadow-lg opacity-75 w-[80vw] md:w-[90vw] lg:w-[70vw] xl:w-[60vw] 
+       <div className="mr h-[80vh]  bg-white border-2 border-white shadow-lg opacity-75 w-[80vw] md:w-[90vw] lg:w-[70vw] xl:w-[60vw] 
        rounded-3xl grid">
           <div className="flex flex-row  justify-center">
              
