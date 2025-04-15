@@ -4,7 +4,7 @@ import { Jwt } from "jsonwebtoken";
 import { PrismaClient } from '@prisma/client'
 let jwt = require('jsonwebtoken');
 const prisma = new PrismaClient() ;
-const JWT_SECRET = process.env.JWT_KEY ;
+
 
 
 const createToken = (email:String,userId: number) => {
@@ -13,7 +13,7 @@ const createToken = (email:String,userId: number) => {
         email, userId
      }
     },
-     JWT_SECRET, { expiresIn: 60 * 60 }
+     process.env.JWT_SECRET, { expiresIn: 60 * 60 }
   )
 }
 
