@@ -2,19 +2,59 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Button} from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { useState } from "react"
-import { Label } from "@/components/ui/label"
-
+import {toast} from "sonner"
+import axios from "axios"
+import { Host } from "@/utils/constant"
 
 export const Auth = () => {
     const [email, setemail] = useState("") ;
     const [password, setpassword] = useState("") ;
     const [confirmpassword, setconfirmpassword] = useState("") ;
-    const handlelogin = () => {
 
+ const validatelogin = () => {
+      if (!email.length) {
+         toast.warning("Email is required")
+         return false
+      }
+      if (!password.length) {
+         toast.warning("Password is required")
+         return false
+      }
+      else return true ;
     }
-    const handlesignup = () => {
+ 
 
+    const validatesignup = () => {
+      if (!email.length) {
+         toast.warning("Email is required")
+         return false
+      }
+      if (!password.length) {
+         toast.warning("Password is required")
+         return false
+      }
+      if (password !== confirmpassword) {
+         toast.warning("Password and Confirmed Password should be same.")
+         return false
+      }
+      else return true ;
     }
+    const handlelogin = async() => {
+      console.log("Hi thee123132")
+      if (validatesignup()) {
+         const response = await axios.post(`${Host}/api/auth/login`, {email,password}, {withCredentials: true} )
+         console.log(response)
+         toast.success("User is loggged in")
+       }
+    }
+    const handlesignup = async() => {
+      console.log("Hi thee")
+    if (validatelogin()) {
+        const response = await axios.post(`${Host}/api/auth/signup`, {email,password}, {withCredentials: true} )
+        console.log(response)
+        toast.success("User is signed in")
+    }
+   }
     return <>
     <div className="h-[100vh] w-[100vw] flex items-center justify-center">
        <div className="mr h-[80vh]  bg-white border-2 border-white shadow-lg opacity-75 w-[80vw] md:w-[90vw] lg:w-[70vw] xl:w-[60vw] 
@@ -49,7 +89,7 @@ export const Auth = () => {
                  <Input type="password" placeholder="Password" className="rounded-full p-6 border-slate-300" onChange={(e)=> {
                           setpassword(e.target.value)
                     }} />
-                 <Button className="rounded-full p-6 text-slate-100">Login</Button>
+                 <Button className="rounded-full p-6 text-slate-100" onClick={handlelogin}>Login</Button>
                  </TabsContent>
                  <TabsContent value="Signup" className="gap-3 mt-10 flex flex-col">
                  <Input type="email" placeholder="Email" className="rounded-full p-6 border-slate-300" onChange={(e)=> {
@@ -61,7 +101,7 @@ export const Auth = () => {
                  <Input type="password" placeholder="Confirm Password" className="rounded-full p-6 border-slate-300" onChange={(e)=> {
                           setconfirmpassword(e.target.value)
                     }} />
-                  <Button className="rounded-full p-6 text-slate-100">Signup</Button>
+                  <Button className="rounded-full p-6 text-slate-100" onClick={handlesignup} >Signup</Button>
                  </TabsContent>
                 </Tabs>
                     </div>
