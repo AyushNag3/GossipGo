@@ -1,9 +1,9 @@
 import { Request, Response, NextFunction, response } from "express";
 import bcrypt from "bcryptjs"
 import { Jwt } from "jsonwebtoken";
-import { PrismaClient } from '@prisma/client'
 let jwt = require('jsonwebtoken');
-const prisma = new PrismaClient() ;
+import { PrismaClient } from "../../generated/prisma";
+const prisma = new PrismaClient()
 
 
 
@@ -21,13 +21,15 @@ export const signup = async(req:Request, res:Response, next:NextFunction) => {
     const email = req.body.email ; 
     const password = req.body.password; 
     const confirmpassword = req.body.confirmpassword ;
+    console.log(`${password} and ${confirmpassword}`)
     if (password !== confirmpassword) {
         return res.status(422).send("Password and Confirm Passwordn does not match")
     }
     if (!email || !password) {
         return res.status(400).send("Email and Password is required") 
     }
-    const hashedPassword = await bcrypt.hash(password, 10); // Hash password
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash password //
+    // @ts-ignore
     const user = await prisma.User.create({
         data : {
             email : email,
@@ -59,7 +61,7 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
     const hashPassword = await bcrypt.hash(password, 10); 
     if (!email || !password) {
         return res.status(400).send("Email and Password is required") 
-    }
+    }      // @ts-ignore
     const user = await prisma.User.findUnique({
         where : {
             email : email
