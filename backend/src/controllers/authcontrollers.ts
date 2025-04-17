@@ -13,7 +13,7 @@ const createToken = (email:String,userId: number) => {
         email, userId
      }
     },
-     process.env.JWT_SECRET, { expiresIn: 60 * 60 }
+     process.env.JWT_KEY, { expiresIn: 60 * 60 }
   )
 }
 export const signup = async(req:Request, res:Response, next:NextFunction) => {
@@ -21,9 +21,9 @@ export const signup = async(req:Request, res:Response, next:NextFunction) => {
     const email = req.body.email ; 
     const password = req.body.password; 
     const confirmpassword = req.body.confirmpassword ;
-    console.log(`${password} and ${confirmpassword}`)
+    console.log(`${confirmpassword} and ${password}`)
     if (password !== confirmpassword) {
-        return res.status(422).send("Password and Confirm Passwordn does not match")
+        return res.status(422).send("Password and Confirm Password does not match")
     }
     if (!email || !password) {
         return res.status(400).send("Email and Password is required") 
@@ -58,6 +58,7 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
  try {
     const email = req.body.email ; 
     const password = req.body.password; 
+    console.log(password)
     const hashPassword = await bcrypt.hash(password, 10); 
     if (!email || !password) {
         return res.status(400).send("Email and Password is required") 
@@ -70,7 +71,8 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
     if (!user) {
       return res.status(404).send('User with the given email not found') ;
     }
-    const auth = await bcrypt.compare(hashPassword,user.password) ;
+    console.log(user.password)
+    const auth = await bcrypt.compare(password,user.password) ;
     if (!auth) {
         return res.status(422).send("Password is Incorrect") ;
     }

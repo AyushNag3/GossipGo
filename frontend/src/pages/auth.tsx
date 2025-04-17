@@ -41,7 +41,7 @@ export const Auth = () => {
     }
     const handlelogin = async() => {
       console.log("Hi thee123132")
-      if (validatesignup()) {
+      if (validatelogin()) {
          const response = await axios.post(`${Host}/api/auth/login`, {email,password}, {withCredentials: true} )
          console.log(response)
          toast.success("User is loggged in")
@@ -49,8 +49,8 @@ export const Auth = () => {
     }
     const handlesignup = async() => {
       console.log("Hi thee")
-    if (validatelogin()) {
-        const response = await axios.post(`${Host}/api/auth/signup`, {email,password}, {withCredentials: true} )
+    if (validatesignup()) {
+        const response = await axios.post(`${Host}/api/auth/signup`, {email,password,confirmpassword}, {withCredentials: true} )
         console.log(response)
         toast.success("User is signed in")
     }
