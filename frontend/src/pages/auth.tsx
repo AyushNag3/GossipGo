@@ -6,12 +6,14 @@ import {toast} from "sonner"
 import axios from "axios"
 import { Host } from "@/utils/constant"
 import { useNavigate } from "react-router-dom"
+import { UseStore } from "@/zustand/store/store"
 
 export const Auth = () => {
    const navigate = useNavigate() ;
     const [email, setemail] = useState("") ;
     const [password, setpassword] = useState("") ;
     const [confirmpassword, setconfirmpassword] = useState("") ;
+    const  {setUserinfo} = UseStore() ;
 
  const validatelogin = () => {
       if (!email.length) {
@@ -46,6 +48,7 @@ export const Auth = () => {
       if (validatelogin()) {
          const response = await axios.post(`${Host}/api/auth/login`, {email,password}, {withCredentials: true} )
          if (response.data.user.id) {
+            setUserinfo(response.data.user)
             if (response.data.user.ProfileSetup) navigate("/chat")
                else navigate("/profile")
          }
@@ -60,6 +63,7 @@ export const Auth = () => {
     if (validatesignup()) {
         const response = await axios.post(`${Host}/api/auth/signup`, {email,password,confirmpassword}, {withCredentials: true} )
         if (response.status === 201) {
+         setUserinfo(response.data.user)
          navigate("/profile")
         }
         toast.success("User is signed in")
