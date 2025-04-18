@@ -5,9 +5,11 @@ import { authRoute } from "./routes/authroutes";
 const app = express()  ;
 app.use(express.json()) 
 app.use(cors({
-    origin: "http://localhost:5173", // allow Vite frontend
-    credentials: true // allow cookies to be sent if using with auth
-  }));
+  origin: (origin, callback) => {
+    callback(null, origin || true); // Allow all origins
+  },
+  credentials: true
+}));
 app.use(cookieParser())
 
 app.use('/api/auth', authRoute)

@@ -21,7 +21,7 @@ export const signup = async(req:Request, res:Response, next:NextFunction) => {
     const email = req.body.email ; 
     const password = req.body.password; 
     const confirmpassword = req.body.confirmpassword ;
-    console.log(`${confirmpassword} and ${password}`)
+    // console.log(`${confirmpassword} and ${password}`)
     if (password !== confirmpassword) {
         return res.status(422).send("Password and Confirm Password does not match")
     }
@@ -44,7 +44,7 @@ export const signup = async(req:Request, res:Response, next:NextFunction) => {
             name : user.Name,
             image : user.image,
             colour : user.color,
-            profileSetup : user.profileSetup
+            ProfileSetup : user.ProfileSetup
         }
     })
  }
@@ -58,7 +58,7 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
  try {
     const email = req.body.email ; 
     const password = req.body.password; 
-    console.log(password)
+    // console.log(password)
     const hashPassword = await bcrypt.hash(password, 10); 
     if (!email || !password) {
         return res.status(400).send("Email and Password is required") 
@@ -71,7 +71,7 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
     if (!user) {
       return res.status(404).send('User with the given email not found') ;
     }
-    console.log(user.password)
+    // console.log(user.password)
     const auth = await bcrypt.compare(password,user.password) ;
     if (!auth) {
         return res.status(422).send("Password is Incorrect") ;
@@ -83,10 +83,12 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
    return res.status(200).json({
      user : {
         id : user.id,
-        name : user.name,
-        profileSetup : user.profileSetup,
+        email : user.email, 
+        password : user.password,
+        name : user.Name,
         image : user.image,
-        color : user.color 
+        colour : user.color,
+        ProfileSetup : user.ProfileSetup
      }
    })
  }
