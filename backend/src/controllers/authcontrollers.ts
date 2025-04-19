@@ -1,4 +1,4 @@
-import { Request, Response, NextFunction, response } from "express";
+import { Request, Response, NextFunction } from "express";
 import bcrypt from "bcryptjs"
 import { Jwt } from "jsonwebtoken";
 let jwt = require('jsonwebtoken');
@@ -36,6 +36,10 @@ export const signup = async(req:Request, res:Response, next:NextFunction) => {
             password : hashedPassword
         }
     })
+    res.cookie("jwt_cookie", createToken(email,password), {
+        maxAge : 1000*60*60,
+        sameSite : "none"
+       })
     return res.status(201).json({
         user : {
             id : user.id,
@@ -96,4 +100,27 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
    console.log(error) 
    return res.status(500).send("Internal Server Error")
  }
+}
+
+export const getUserInfo = async(req:Request, res:Response, next:NextFunction) => {
+  try {
+    // const email = req.body.email ;
+    // const password = req.body.password; 
+    // if (!email || !password) {
+    //     return res.status(400).send("Email and Password is required") 
+    // }
+    // const user = await prisma.User.findUnique({
+    //     where : {
+    //         email : email
+    //     }
+    // })
+    // if (!user) {
+    //     return res.status(404).send("User with the given email not found")
+    // }
+    // const auth = await ;
+
+  }
+  catch(error) {
+
+  }
 }
