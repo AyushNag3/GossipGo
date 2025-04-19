@@ -55,7 +55,6 @@ export const Auth = () => {
          console.log(response)
          
          toast.success("User is loggged in")
-       
        }
     }
     const handlesignup = async() => {

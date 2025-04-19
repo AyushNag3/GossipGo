@@ -5,8 +5,6 @@ let jwt = require('jsonwebtoken');
 import { PrismaClient } from "../../generated/prisma";
 const prisma = new PrismaClient()
 
-
-
 const createToken = (email:String,userId: number) => {
   return jwt.sign( {
      data : {
@@ -36,7 +34,7 @@ export const signup = async(req:Request, res:Response, next:NextFunction) => {
             password : hashedPassword
         }
     })
-    res.cookie("jwt_cookie", createToken(email,password), {
+    res.cookie("jwt", createToken(email,password), {
         maxAge : 1000*60*60,
         sameSite : "none"
        })
@@ -80,7 +78,7 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
     if (!auth) {
         return res.status(422).send("Password is Incorrect") ;
     }
-   res.cookie("jwt_cookie", createToken(email,password), {
+   res.cookie("jwt", createToken(email,password), {
     maxAge : 1000*60*60,
     sameSite : "none"
    })

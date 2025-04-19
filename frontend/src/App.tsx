@@ -21,13 +21,13 @@ const PrivateRoute = ({children} : {children : React.ReactNode}) => {
 const AuthRoute = ({children} : {children : React.ReactNode}) => {
   const {userInfo} = UseStore() ;
   const isAuthenticated = !!userInfo ;
-  if (isAuthenticated) return  <Navigate to={"/auth"} />
+  if (isAuthenticated) return  <Navigate to={"/profile"} />
   else return children
 }
 
 function App() {
  const {userInfo, setUserinfo} = UseStore() ;
- const [loading, setloading] = useState(false) ;
+ const [loading, setloading] = useState(true) ;
 
  useEffect( () => {
  const getuserdata = async() => {
@@ -56,7 +56,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Navigate to= "/auth" />}/>
-        <Route path='/auth' element={<AuthRoute><Auth/></AuthRoute>}></Route>
+        <Route path='/auth' element={<Auth/>}></Route>
         <Route path='/profile' element={<PrivateRoute><Profile/></PrivateRoute>}/>
         <Route path='/chat' element={<PrivateRoute><Chat/></PrivateRoute>}/>
       </Routes>
