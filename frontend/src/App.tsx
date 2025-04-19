@@ -20,8 +20,8 @@ const PrivateRoute = ({children} : {children : React.ReactNode}) => {
 
 const AuthRoute = ({children} : {children : React.ReactNode}) => {
   const {userInfo} = UseStore() ;
-  const isAuthenticated = !!userInfo ;
-  if (isAuthenticated) return  <Navigate to={"/profile"} />
+  const isAuthenticated = userInfo ;
+  if (isAuthenticated) return <Navigate to={"/profile"} />
   else return children
 }
 
@@ -33,13 +33,13 @@ function App() {
  const getuserdata = async() => {
   try {
     const response = await axios.get(`${Host}/${get_user_info}`,  {withCredentials: true} )
-    console.log(response)
+    // console.log(response)
   }
   catch(error) {
     console.log(error)
   }
  }
- if (!userInfo) {
+ if (userInfo) {
   getuserdata() ;
  }
  else {
@@ -47,8 +47,8 @@ function App() {
  }
  },[userInfo, setUserinfo])
 
- if (loading) {
-  return <div>Loading....</div>
+ if (userInfo) {
+  <Navigate to={"/profile"} />
  }
 
   return (
@@ -56,7 +56,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Navigate to= "/auth" />}/>
-        <Route path='/auth' element={<Auth/>}></Route>
+        <Route path='/auth' element={<AuthRoute><Auth/></AuthRoute>}></Route>
         <Route path='/profile' element={<PrivateRoute><Profile/></PrivateRoute>}/>
         <Route path='/chat' element={<PrivateRoute><Chat/></PrivateRoute>}/>
       </Routes>
