@@ -5,7 +5,7 @@ let jwt = require('jsonwebtoken');
 import { PrismaClient } from "../../generated/prisma";
 const prisma = new PrismaClient()
 
-const createToken = (email:String,userId: number) => {
+const createToken = (email:String,userId: string) => {
   return jwt.sign( {
      data : {
         email, userId
@@ -34,7 +34,7 @@ export const signup = async(req:Request, res:Response, next:NextFunction) => {
             password : hashedPassword
         }
     })
-    res.cookie("jwt_cookie", createToken(email,password), {
+    res.cookie("jwt_cookie", createToken(email, Math.floor(Math.random() * 1000000).toString()), {
         maxAge : 1000*60*60,
         httpOnly: true,         // Keeps it secure from JS
         secure: false,          // true if using HTTPS
@@ -81,7 +81,7 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
     if (!auth) {
         return res.status(422).send("Password is Incorrect") ;
     }
-   res.cookie("jwt_cookie", createToken(email,password), {
+   res.cookie("jwt_cookie", createToken(email, Math.floor(Math.random() * 1000000).toString()), {
     maxAge : 1000*60*60,
     httpOnly: true,         // Keeps it secure from JS
     secure: false,          // true if using HTTPS
@@ -105,22 +105,27 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
  }
 }
 
-export const getUserInfo = async(req:Request, res:Response, next:NextFunction) => {
+interface customtype extends Request{
+  userId? : string
+}
+
+export const getUserInfo = async(req:customtype, res:Response, next:NextFunction) => {
+ 
   try {
-    // const email = req.body.email ;
-    // const password = req.body.password; 
-    // if (!email || !password) {
-    //     return res.status(400).send("Email and Password is required") 
-    // }
-    // const user = await prisma.User.findUnique({
-    //     where : {
-    //         email : email
-    //     }
-    // })
-    // if (!user) {
-    //     return res.status(404).send("User with the given email not found")
-    // }
-    // const auth = await ;
+    const email = req.body.email ;
+    const password = req.body.password; 
+    if (!email || !password) {
+        return res.status(400).send("Email and Password is required") 
+    }
+    const user = await prisma.User.findUnique({
+        where : {
+            email : email
+        }
+    })
+    if (!user) {
+        return res.status(404).send("User with the given email not found")
+    }
+    const auth = await ;
 
   }
   catch(error) {
