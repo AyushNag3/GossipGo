@@ -5,7 +5,7 @@ let jwt = require('jsonwebtoken');
 import { PrismaClient } from "../../generated/prisma";
 const prisma = new PrismaClient()
 
-const createToken = (email:String,userId: string) => {
+const createToken = (email:String,userId: number) => {
   return jwt.sign( {
      data : {
         email, userId
@@ -34,7 +34,7 @@ export const signup = async(req:Request, res:Response, next:NextFunction) => {
             password : hashedPassword
         }
     })
-    res.cookie("jwt_cookie", createToken(email, Math.floor(Math.random() * 1000000).toString()), {
+    res.cookie("jwt_cookie", createToken(email, user.id), {
         maxAge : 1000*60*60,
         httpOnly: true,         // Keeps it secure from JS
         secure: false,          // true if using HTTPS
@@ -81,7 +81,7 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
     if (!auth) {
         return res.status(422).send("Password is Incorrect") ;
     }
-   res.cookie("jwt_cookie", createToken(email, Math.floor(Math.random() * 1000000).toString()), {
+   res.cookie("jwt_cookie", createToken(email, user.id), {
     maxAge : 1000*60*60,
     httpOnly: true,         // Keeps it secure from JS
     secure: false,          // true if using HTTPS
@@ -112,23 +112,31 @@ interface customtype extends Request{
 export const getUserInfo = async(req:customtype, res:Response, next:NextFunction) => {
  
   try {
-    const email = req.body.email ;
-    const password = req.body.password; 
-    if (!email || !password) {
-        return res.status(400).send("Email and Password is required") 
-    }
+    // const email = req.body.email ;
+    // const password = req.body.password; 
+    // if (!email || !password) {
+    //     return res.status(400).send("Email and Password is required") 
+    // }
     const user = await prisma.User.findUnique({
         where : {
-            email : email
+            id : req.userId
         }
     })
     if (!user) {
-        return res.status(404).send("User with the given email not found")
+        return res.status(404).send("User with the given id not found")
     }
-    const auth = await ;
-
+    return res.status(200).json({
+      id : user.id ,
+      email : user.email ,
+      password : user.password ,
+      Name : user.Name,
+      image : user.image,
+      color : user.color ,
+      ProfileSetup : user.ProfileSetup
+    })
   }
   catch(error) {
-
+    console.log({error}) ;
+    return res.status(500).send("Internal Server Error")
   }
 }
