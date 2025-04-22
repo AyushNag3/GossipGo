@@ -8,6 +8,9 @@ import { FaPlus } from "react-icons/fa";
 import { FaTrash } from "react-icons/fa";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { Host } from "@/utils/constant";
+import { toast } from "sonner";
 
 export const Profile = () => {
     const {userInfo, setUserinfo} = UseStore() ; // Or states phir  {states.userInfo}
@@ -19,9 +22,29 @@ export const Profile = () => {
     const [selectedcolor, setselectedcolor] = useState(0) ;
                     //@ts-ignore
    const email  = userInfo.email ;
-      // use email here
+      const validateprofile = () => {
+        if (!firstname) {
+          toast.warning("First Name is required") 
+          return false ;
+        }
+        if (!lastname) {
+          toast.warning("Last Name is required") 
+          return false ;
+        }
+        return true ;
+      }
      const savechanges = async() => {
-      
+      try {
+      if (validateprofile()) {
+       const response = await axios.post(`${Host}/api/auth/profile`, {firstname,lastname, selectedcolor}, {withCredentials : true})
+       if (response.status === 200) {
+        setUserinfo(response.data.user)
+        toast.success("Profile has been updated successfully")
+       }
+      }
+    } catch(error) {
+
+    }
      }
     return (
       <>

@@ -114,15 +114,10 @@ interface customtype extends Request{
 export const getUserInfo = async(req:customtype, res:Response, next:NextFunction) => {
  
   try {
-    // const email = req.body.email ;
-    // const password = req.body.password; 
-    // if (!email || !password) {
-    //     return res.status(400).send("Email and Password is required") 
-    // }
                               //@ts-ignore
     const user = await prisma.User.findFirst({
-        where : {
-            id : Number(req.userId)
+        where : {           
+            id : (req.userId)
         }
     })
     if (!user) {
@@ -143,4 +138,37 @@ export const getUserInfo = async(req:customtype, res:Response, next:NextFunction
     console.log({error}) ;
     return res.status(500).send("Internal Server Error")
   }
+}
+
+export const UpdateProfile = async (req:Request, res:Response, next:NextFunction) => {
+  
+  try {
+    const {firstname, lastname, selectedcolor} = req.body ;
+    if (!firstname || !lastname || !selectedcolor) {
+      return res.status(400).send("FirstName and LastName and Color is required")
+    }
+    //@ts-ignore
+const user = await prisma.User.findFirst({
+where : {       //@ts-ignore    
+id : Number(req.userId)
+}
+})
+if (!user) {
+return res.status(404).send("User with the given id not found")
+}
+return res.status(200).json({
+id : user.id ,
+email : user.email ,
+password : user.password ,
+FirstName : user.FirstName,
+LastName : user.LastName ,
+image : user.image,
+color : user.color ,
+ProfileSetup : user.ProfileSetup
+})
+}
+catch(error) {
+console.log({error}) ;
+return res.status(500).send("Internal Server Error")
+}
 }
