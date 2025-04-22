@@ -74,7 +74,7 @@ export const Auth = () => {
        rounded-3xl grid">
           <div className="flex flex-row  justify-center">
              
-                 <div className="flex flex-col justify-center w-full">
+                 <div className="flex flex-col items-center justify-center w-full">
                    <h1 className="text-5xl font-bold md:text-6xl ">
                         Welcome
                    </h1>

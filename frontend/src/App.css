@@ -1,10 +1,5 @@
 #root {
 
-  margin: 0 auto;
-
-  text-align: center;
-  --warning: oklch(0.84 0.16 84);
-  --warning-foreground: oklch(0.28 0.07 46);
 }
 
 .dark {
