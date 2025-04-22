@@ -38,7 +38,6 @@ export class PrismaClient<
   U = 'log' extends keyof ClientOptions ? ClientOptions['log'] extends Array<Prisma.LogLevel | Prisma.LogDefinition> ? Prisma.GetEvents<ClientOptions['log']> : never : never,
   ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs
 > {
-  User: any;
   [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['other'] }
 
     /**
@@ -896,7 +895,8 @@ export namespace Prisma {
     id: number | null
     email: string | null
     password: string | null
-    Name: string | null
+    FirstName: string | null
+    LastName: string | null
     image: string | null
     color: number | null
     ProfileSetup: boolean | null
@@ -906,7 +906,8 @@ export namespace Prisma {
     id: number | null
     email: string | null
     password: string | null
-    Name: string | null
+    FirstName: string | null
+    LastName: string | null
     image: string | null
     color: number | null
     ProfileSetup: boolean | null
@@ -916,7 +917,8 @@ export namespace Prisma {
     id: number
     email: number
     password: number
-    Name: number
+    FirstName: number
+    LastName: number
     image: number
     color: number
     ProfileSetup: number
@@ -938,7 +940,8 @@ export namespace Prisma {
     id?: true
     email?: true
     password?: true
-    Name?: true
+    FirstName?: true
+    LastName?: true
     image?: true
     color?: true
     ProfileSetup?: true
@@ -948,7 +951,8 @@ export namespace Prisma {
     id?: true
     email?: true
     password?: true
-    Name?: true
+    FirstName?: true
+    LastName?: true
     image?: true
     color?: true
     ProfileSetup?: true
@@ -958,7 +962,8 @@ export namespace Prisma {
     id?: true
     email?: true
     password?: true
-    Name?: true
+    FirstName?: true
+    LastName?: true
     image?: true
     color?: true
     ProfileSetup?: true
@@ -1055,7 +1060,8 @@ export namespace Prisma {
     id: number
     email: string
     password: string
-    Name: string | null
+    FirstName: string | null
+    LastName: string | null
     image: string | null
     color: number | null
     ProfileSetup: boolean
@@ -1084,7 +1090,8 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     password?: boolean
-    Name?: boolean
+    FirstName?: boolean
+    LastName?: boolean
     image?: boolean
     color?: boolean
     ProfileSetup?: boolean
@@ -1094,7 +1101,8 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     password?: boolean
-    Name?: boolean
+    FirstName?: boolean
+    LastName?: boolean
     image?: boolean
     color?: boolean
     ProfileSetup?: boolean
@@ -1104,7 +1112,8 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     password?: boolean
-    Name?: boolean
+    FirstName?: boolean
+    LastName?: boolean
     image?: boolean
     color?: boolean
     ProfileSetup?: boolean
@@ -1114,13 +1123,14 @@ export namespace Prisma {
     id?: boolean
     email?: boolean
     password?: boolean
-    Name?: boolean
+    FirstName?: boolean
+    LastName?: boolean
     image?: boolean
     color?: boolean
     ProfileSetup?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "Name" | "image" | "color" | "ProfileSetup", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "email" | "password" | "FirstName" | "LastName" | "image" | "color" | "ProfileSetup", ExtArgs["result"]["user"]>
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
@@ -1129,7 +1139,8 @@ export namespace Prisma {
       id: number
       email: string
       password: string
-      Name: string | null
+      FirstName: string | null
+      LastName: string | null
       image: string | null
       color: number | null
       ProfileSetup: boolean
@@ -1559,7 +1570,8 @@ export namespace Prisma {
     readonly id: FieldRef<"User", 'Int'>
     readonly email: FieldRef<"User", 'String'>
     readonly password: FieldRef<"User", 'String'>
-    readonly Name: FieldRef<"User", 'String'>
+    readonly FirstName: FieldRef<"User", 'String'>
+    readonly LastName: FieldRef<"User", 'String'>
     readonly image: FieldRef<"User", 'String'>
     readonly color: FieldRef<"User", 'Int'>
     readonly ProfileSetup: FieldRef<"User", 'Boolean'>
@@ -1947,7 +1959,8 @@ export namespace Prisma {
     id: 'id',
     email: 'email',
     password: 'password',
-    Name: 'Name',
+    FirstName: 'FirstName',
+    LastName: 'LastName',
     image: 'image',
     color: 'color',
     ProfileSetup: 'ProfileSetup'
@@ -2044,7 +2057,8 @@ export namespace Prisma {
     id?: IntFilter<"User"> | number
     email?: StringFilter<"User"> | string
     password?: StringFilter<"User"> | string
-    Name?: StringNullableFilter<"User"> | string | null
+    FirstName?: StringNullableFilter<"User"> | string | null
+    LastName?: StringNullableFilter<"User"> | string | null
     image?: StringNullableFilter<"User"> | string | null
     color?: IntNullableFilter<"User"> | number | null
     ProfileSetup?: BoolFilter<"User"> | boolean
@@ -2054,7 +2068,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    Name?: SortOrderInput | SortOrder
+    FirstName?: SortOrderInput | SortOrder
+    LastName?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
     color?: SortOrderInput | SortOrder
     ProfileSetup?: SortOrder
@@ -2067,7 +2082,8 @@ export namespace Prisma {
     NOT?: UserWhereInput | UserWhereInput[]
     id?: IntFilter<"User"> | number
     password?: StringFilter<"User"> | string
-    Name?: StringNullableFilter<"User"> | string | null
+    FirstName?: StringNullableFilter<"User"> | string | null
+    LastName?: StringNullableFilter<"User"> | string | null
     image?: StringNullableFilter<"User"> | string | null
     color?: IntNullableFilter<"User"> | number | null
     ProfileSetup?: BoolFilter<"User"> | boolean
@@ -2077,7 +2093,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    Name?: SortOrderInput | SortOrder
+    FirstName?: SortOrderInput | SortOrder
+    LastName?: SortOrderInput | SortOrder
     image?: SortOrderInput | SortOrder
     color?: SortOrderInput | SortOrder
     ProfileSetup?: SortOrder
@@ -2095,7 +2112,8 @@ export namespace Prisma {
     id?: IntWithAggregatesFilter<"User"> | number
     email?: StringWithAggregatesFilter<"User"> | string
     password?: StringWithAggregatesFilter<"User"> | string
-    Name?: StringNullableWithAggregatesFilter<"User"> | string | null
+    FirstName?: StringNullableWithAggregatesFilter<"User"> | string | null
+    LastName?: StringNullableWithAggregatesFilter<"User"> | string | null
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     color?: IntNullableWithAggregatesFilter<"User"> | number | null
     ProfileSetup?: BoolWithAggregatesFilter<"User"> | boolean
@@ -2105,7 +2123,8 @@ export namespace Prisma {
     id?: number
     email: string
     password: string
-    Name?: string | null
+    FirstName?: string | null
+    LastName?: string | null
     image?: string | null
     color?: number | null
     ProfileSetup?: boolean
@@ -2115,7 +2134,8 @@ export namespace Prisma {
     id?: number
     email: string
     password: string
-    Name?: string | null
+    FirstName?: string | null
+    LastName?: string | null
     image?: string | null
     color?: number | null
     ProfileSetup?: boolean
@@ -2125,7 +2145,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    Name?: NullableStringFieldUpdateOperationsInput | string | null
+    FirstName?: NullableStringFieldUpdateOperationsInput | string | null
+    LastName?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableIntFieldUpdateOperationsInput | number | null
     ProfileSetup?: BoolFieldUpdateOperationsInput | boolean
@@ -2135,7 +2156,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    Name?: NullableStringFieldUpdateOperationsInput | string | null
+    FirstName?: NullableStringFieldUpdateOperationsInput | string | null
+    LastName?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableIntFieldUpdateOperationsInput | number | null
     ProfileSetup?: BoolFieldUpdateOperationsInput | boolean
@@ -2145,7 +2167,8 @@ export namespace Prisma {
     id?: number
     email: string
     password: string
-    Name?: string | null
+    FirstName?: string | null
+    LastName?: string | null
     image?: string | null
     color?: number | null
     ProfileSetup?: boolean
@@ -2155,7 +2178,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    Name?: NullableStringFieldUpdateOperationsInput | string | null
+    FirstName?: NullableStringFieldUpdateOperationsInput | string | null
+    LastName?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableIntFieldUpdateOperationsInput | number | null
     ProfileSetup?: BoolFieldUpdateOperationsInput | boolean
@@ -2165,7 +2189,8 @@ export namespace Prisma {
     id?: IntFieldUpdateOperationsInput | number
     email?: StringFieldUpdateOperationsInput | string
     password?: StringFieldUpdateOperationsInput | string
-    Name?: NullableStringFieldUpdateOperationsInput | string | null
+    FirstName?: NullableStringFieldUpdateOperationsInput | string | null
+    LastName?: NullableStringFieldUpdateOperationsInput | string | null
     image?: NullableStringFieldUpdateOperationsInput | string | null
     color?: NullableIntFieldUpdateOperationsInput | number | null
     ProfileSetup?: BoolFieldUpdateOperationsInput | boolean
@@ -2237,7 +2262,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    Name?: SortOrder
+    FirstName?: SortOrder
+    LastName?: SortOrder
     image?: SortOrder
     color?: SortOrder
     ProfileSetup?: SortOrder
@@ -2252,7 +2278,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    Name?: SortOrder
+    FirstName?: SortOrder
+    LastName?: SortOrder
     image?: SortOrder
     color?: SortOrder
     ProfileSetup?: SortOrder
@@ -2262,7 +2289,8 @@ export namespace Prisma {
     id?: SortOrder
     email?: SortOrder
     password?: SortOrder
-    Name?: SortOrder
+    FirstName?: SortOrder
+    LastName?: SortOrder
     image?: SortOrder
     color?: SortOrder
     ProfileSetup?: SortOrder

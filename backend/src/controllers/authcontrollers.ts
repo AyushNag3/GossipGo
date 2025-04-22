@@ -46,7 +46,8 @@ export const signup = async(req:Request, res:Response, next:NextFunction) => {
             id : user.id,
             email : user.email, 
             password : user.password,
-            name : user.Name,
+            FirstName : user.FirstName,
+            LastName : user.LastName ,
             image : user.image,
             colour : user.color,
             ProfileSetup : user.ProfileSetup
@@ -92,7 +93,8 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
         id : user.id,
         email : user.email, 
         password : user.password,
-        name : user.Name,
+        FirstName : user.FirstName,
+        LastName : user.LastName ,
         image : user.image,
         colour : user.color,
         ProfileSetup : user.ProfileSetup
@@ -117,6 +119,7 @@ export const getUserInfo = async(req:customtype, res:Response, next:NextFunction
     // if (!email || !password) {
     //     return res.status(400).send("Email and Password is required") 
     // }
+                              //@ts-ignore
     const user = await prisma.User.findFirst({
         where : {
             id : Number(req.userId)
@@ -129,7 +132,8 @@ export const getUserInfo = async(req:customtype, res:Response, next:NextFunction
       id : user.id ,
       email : user.email ,
       password : user.password ,
-      Name : user.Name,
+      FirstName : user.FirstName,
+      LastName : user.LastName ,
       image : user.image,
       color : user.color ,
       ProfileSetup : user.ProfileSetup

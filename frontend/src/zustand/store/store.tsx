@@ -6,6 +6,6 @@ interface States {
 }
 
 export const UseStore = create<States>((set) => ({
-  userInfo: false,
+  userInfo: 0,
   setUserinfo : (userInfo) => set({userInfo}) ,
 }))

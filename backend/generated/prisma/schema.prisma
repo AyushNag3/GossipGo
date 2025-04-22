@@ -18,7 +18,8 @@ model User {
   id           Int     @default(autoincrement())
   email        String  @unique
   password     String
-  Name         String?
+  FirstName    String?
+  LastName     String?
   image        String?
   color        Int?
   ProfileSetup Boolean @default(false)
