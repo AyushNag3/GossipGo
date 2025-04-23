@@ -12,16 +12,17 @@ import { Host } from "@/utils/constant"
 import { get_user_info } from '@/utils/constant';
 
 const PrivateRoute = ({children} : {children : React.ReactNode}) => {
-  const {userInfo} = UseStore() ;
-  const isAuthenticated = !!userInfo ;
-  if (isAuthenticated) return children 
+  const {userInfo} = UseStore() ; //@ts-ignore
+  console.log(userInfo.email)
+  if (userInfo) return children 
   else return <Navigate to={"/auth"} />
 }
 
 const AuthRoute = ({children} : {children : React.ReactNode}) => {
   const {userInfo} = UseStore() ;
-  const isAuthenticated = userInfo ;
-  if (isAuthenticated) return <Navigate to={"/profile"} />
+  //@ts-ignore
+  console.log(userInfo.email)
+  if (userInfo) return <Navigate to={"/profile"} />
   else return children
 }
 

@@ -1,6 +1,6 @@
 import { UseStore } from "@/zustand/store/store"; // importing from store.tsx
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link} from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
 import { colors, getColor } from "@/lib/utils";
@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { Host } from "@/utils/constant";
 import { toast } from "sonner";
+
 
 export const Profile = () => {
     const {userInfo, setUserinfo} = UseStore() ; // Or states phir  {states.userInfo}
@@ -38,18 +39,21 @@ export const Profile = () => {
       if (validateprofile()) {
        const response = await axios.post(`${Host}/api/auth/profile`, {firstname,lastname, selectedcolor}, {withCredentials : true})
        if (response.status === 200) {
-        setUserinfo(response.data.user)
         toast.success("Profile has been updated successfully")
+        setUserinfo(response.data.user)
+        navigate('/chat')
        }
       }
     } catch(error) {
-
+      console.log(error) 
     }
      }
+
+
     return (
       <>
       <div className="bg-slate-700 h-[100vh] flex items-center justify-center flex-col gap-10">
-        { email}
+        
         <div className="flex flex-col gap-10 w-[80vw] md:w-max">
           <div>
             <IoArrowBack className="text-4xl lg:text-6xl text-white cursor-pointer"></IoArrowBack>
@@ -98,8 +102,8 @@ export const Profile = () => {
               </div>
             </div>
           </div>
-          <div className="w-full ">
-            <Button onChange={savechanges} className="h-16 w-full bg-[#077A7D] hover:bg-[#077A7D80] text-2xl" >
+          <div className="w-full "> 
+            <Button onClick={savechanges} className="h-16 w-full bg-[#077A7D] hover:bg-[#077A7D80] text-2xl" >
                Click Me
             </Button>
           </div>

@@ -140,22 +140,41 @@ export const getUserInfo = async(req:customtype, res:Response, next:NextFunction
   }
 }
 
-export const UpdateProfile = async (req:Request, res:Response, next:NextFunction) => {
+export const UpdateProfile = async (req:customtype, res:Response, next:NextFunction) => {
   
   try {
-    const {firstname, lastname, selectedcolor} = req.body ;
-    if (!firstname || !lastname || !selectedcolor) {
+   
+    const firstname = req.body.firstname ;
+    const lastname = req.body.lastname ;
+    const  selectedcolor = req.body.selectedcolor ;
+
+   // console.log(firstname + lastname + selectedcolor)
+    if (!firstname || !lastname || (selectedcolor<0)) {
       return res.status(400).send("FirstName and LastName and Color is required")
     }
-    //@ts-ignore
-const user = await prisma.User.findFirst({
-where : {       //@ts-ignore    
-id : Number(req.userId)
+                               //@ts-ignore
+const demo = await prisma.User.findFirst({
+  where : {           
+    id : (req.userId)
 }
 })
-if (!user) {
-return res.status(404).send("User with the given id not found")
+if (!demo) {
+  return res.status(404).send("User with the given id not found")
 }
+                          //@ts-ignore
+    const user = await prisma.User.update({
+      where: {
+        email : demo.email
+      },
+      data: {
+        FirstName : firstname,
+        LastName : lastname ,
+        color : selectedcolor,
+        ProfileSetup : true
+      },
+    })
+
+
 return res.status(200).json({
 id : user.id ,
 email : user.email ,
