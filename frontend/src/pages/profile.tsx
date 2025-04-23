@@ -22,7 +22,7 @@ export const Profile = () => {
     const [hovered, sethovered] = useState(false) ;
     const [selectedcolor, setselectedcolor] = useState(0) ;
                     //@ts-ignore
-   const email  = userInfo.email ;
+    const email = userInfo.email
       const validateprofile = () => {
         if (!firstname) {
           toast.warning("First Name is required") 
@@ -48,8 +48,6 @@ export const Profile = () => {
       console.log(error) 
     }
      }
-
-
     return (
       <>
       <div className="bg-slate-700 h-[100vh] flex items-center justify-center flex-col gap-10">
@@ -67,7 +65,7 @@ export const Profile = () => {
               image ? 
             <AvatarImage src={image} alt="profile" className="object-cover w-full h-full bg-black" /> : (
              <div className={`uppercase h-32 w-32 rounded-full font-semibold md:h-40 md:w-40 text-5xl flex items-center justify-center ${getColor(selectedcolor)}`}>                                        
-              {firstname ? firstname.split("").shift() : email.split("").shift()  }
+              {firstname ? firstname[0] : email[0] }
             </div> 
               )}
             </Avatar>
@@ -93,10 +91,10 @@ export const Profile = () => {
               <div className="w-full flex gap-5">
                 {
                   colors.map((color , index) => (
-                  <>
+                  
                     <div key={index} onClick={() => {setselectedcolor(index)}} className={`${color} h-8 w-8 rounded-full cursor-pointer transition-all duration-300 ${selectedcolor === index ? "outline outline-white " : ""}`}>
                     </div>
-                  </>
+                  
                   ))
                 }
               </div>

@@ -19,3 +19,4 @@ export const verifytoken = async(req:Request, res:Response, next:NextFunction) =
   })
   next()
 }
+

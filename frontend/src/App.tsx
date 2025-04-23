@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-
+import { Request, Response, NextFunction } from "express";
 import './App.css'
 import { Button } from './components/ui/button'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
@@ -11,19 +11,25 @@ import axios from 'axios';
 import { Host } from "@/utils/constant"
 import { get_user_info } from '@/utils/constant';
 
+const verifytokenNotAmiddleware = async(req:Request, res:Response) => {
+  if (req.cookies.jwt_cookie) {
+   return true ;
+  } 
+  else return false ;
+ }
+ 
 const PrivateRoute = ({children} : {children : React.ReactNode}) => {
   const {userInfo} = UseStore() ; //@ts-ignore
-  console.log(userInfo.email)
-  if (userInfo) return children 
+  if (verifytokenNotAmiddleware)  return children 
+  // console.log(userInfo.email)
   else return <Navigate to={"/auth"} />
 }
 
 const AuthRoute = ({children} : {children : React.ReactNode}) => {
-  const {userInfo} = UseStore() ;
-  //@ts-ignore
-  console.log(userInfo.email)
-  if (userInfo) return <Navigate to={"/profile"} />
-  else return children
+  const {userInfo} = UseStore() ; //@ts-ignore
+  if (verifytokenNotAmiddleware)  return children 
+  // console.log(userInfo.email)
+  else return <Navigate to={"/auth"} />
 }
 
 function App() {

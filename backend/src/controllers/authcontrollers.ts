@@ -174,7 +174,6 @@ if (!demo) {
       },
     })
 
-
 return res.status(200).json({
 id : user.id ,
 email : user.email ,
