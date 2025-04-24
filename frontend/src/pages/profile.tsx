@@ -1,5 +1,5 @@
 import { UseStore } from "@/zustand/store/store"; // importing from store.tsx
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate , Link} from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
@@ -14,15 +14,27 @@ import { toast } from "sonner";
 
 
 export const Profile = () => {
-    const {userInfo, setUserinfo} = UseStore() ; // Or states phir  {states.userInfo}
+    const {userInfo, setUserinfo} = UseStore() ; 
     const navigate = useNavigate();
     const [firstname , setfirstname ] = useState("") ;
     const [lastname , setlastname ] = useState("") ;
     const [image, setimage] = useState(null) ;
     const [hovered, sethovered] = useState(false) ;
     const [selectedcolor, setselectedcolor] = useState(0) ;
+
+    useEffect(() => {
+      console.log("Updated Zustand:", userInfo)
+    }, [userInfo])
+
+useEffect(()=> {
+  if (userInfo?.ProfileSetup) {
+  setfirstname(userInfo.FirstName)
+  setlastname(userInfo.LastName) 
+  setselectedcolor(userInfo.color)
+  }
+}, [userInfo])
                     //@ts-ignore
-    const email = userInfo.email
+    const email = userInfo?.email || ""
       const validateprofile = () => {
         if (!firstname) {
           toast.warning("First Name is required") 
@@ -34,24 +46,37 @@ export const Profile = () => {
         }
         return true ;
       }
-     const savechanges = async() => {
-      try {
-      if (validateprofile()) {
-       const response = await axios.post(`${Host}/api/auth/profile`, {firstname,lastname, selectedcolor}, {withCredentials : true})
-       if (response.status === 200) {
-        toast.success("Profile has been updated successfully")
-        setUserinfo(response.data.user)
-        navigate('/chat')
-       }
+const savechanges = async() => {
+  try {
+    if (validateprofile()) {
+      const response = await axios.post(`${Host}/api/auth/profile`, {firstname, lastname, selectedcolor}, {withCredentials : true})
+      if (response.status === 200) {
+        // Create a complete user object with all required fields
+        const updatedUser = {
+          ...userInfo ,
+          FirstName: firstname,
+          LastName: lastname,
+          color: selectedcolor,
+          ProfileSetup: true
+        };
+        
+        // Update the store with the complete user object
+                     //@ts-ignore
+        setUserinfo(updatedUser);
+        
+        toast.success("Profile has been updated successfully");
+        // Navigate after state update
+        setTimeout(() => navigate('/chat'), 1000);
       }
-    } catch(error) {
-      console.log(error) 
     }
-     }
+  } catch(error) {
+    console.log(error);
+    toast.error("Failed to update profile");
+  }
+}
     return (
       <>
       <div className="bg-slate-700 h-[100vh] flex items-center justify-center flex-col gap-10">
-        
         <div className="flex flex-col gap-10 w-[80vw] md:w-max">
           <div>
             <IoArrowBack className="text-4xl lg:text-6xl text-white cursor-pointer"></IoArrowBack>
@@ -63,9 +88,9 @@ export const Profile = () => {
              >
              <Avatar className="h-32 w-32 md:w-40 md:h-40 rounded-full overflow-visible"> {
               image ? 
-            <AvatarImage src={image} alt="profile" className="object-cover w-full h-full bg-black" /> : (
+            <AvatarImage src={image || "/placeholder.svg"} alt="profile" className="object-cover w-full h-full bg-black" /> : (
              <div className={`uppercase h-32 w-32 rounded-full font-semibold md:h-40 md:w-40 text-5xl flex items-center justify-center ${getColor(selectedcolor)}`}>                                        
-              {firstname ? firstname[0] : email[0] }
+              {firstname ? firstname[0] : email?.[0] || "A" }
             </div> 
               )}
             </Avatar>

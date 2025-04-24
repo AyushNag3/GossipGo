@@ -27,9 +27,9 @@ const PrivateRoute = ({children} : {children : React.ReactNode}) => {
 
 const AuthRoute = ({children} : {children : React.ReactNode}) => {
   const {userInfo} = UseStore() ; //@ts-ignore
-  if (verifytokenNotAmiddleware)  return children 
+  if (verifytokenNotAmiddleware)  return children
   // console.log(userInfo.email)
-  else return <Navigate to={"/auth"} />
+  else return <Navigate to={"auth"} />
 }
 
 function App() {

@@ -52,8 +52,7 @@ export const Auth = () => {
             if (response.data.user.ProfileSetup) navigate("/chat")
                else navigate("/profile")
          }
-          console.log(response)
-         
+         // console.log(response)
          toast.success("User is loggged in")
        }
     }
