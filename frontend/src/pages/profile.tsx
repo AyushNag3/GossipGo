@@ -1,5 +1,5 @@
 import { UseStore } from "@/zustand/store/store"; // importing from store.tsx
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useNavigate , Link} from "react-router-dom";
 import { IoArrowBack } from "react-icons/io5";
 import { Avatar, AvatarFallback, AvatarImage } from "../components/ui/avatar"
@@ -18,9 +18,10 @@ export const Profile = () => {
     const navigate = useNavigate();
     const [firstname , setfirstname ] = useState("") ;
     const [lastname , setlastname ] = useState("") ;
-    const [image, setimage] = useState(null) ;
+    const [image, setimage] = useState("") ;
     const [hovered, sethovered] = useState(false) ;
     const [selectedcolor, setselectedcolor] = useState(0) ;
+    const fileInput = useRef(null)
 
     useEffect(() => {
       console.log("Updated Zustand:", userInfo)
@@ -31,6 +32,9 @@ useEffect(()=> {
   setfirstname(userInfo.FirstName)
   setlastname(userInfo.LastName) 
   setselectedcolor(userInfo.color)
+  }
+  if (userInfo?.image) {
+    setimage(`${userInfo.image}`)
   }
 }, [userInfo])
                     //@ts-ignore
@@ -74,11 +78,70 @@ const savechanges = async() => {
     toast.error("Failed to update profile");
   }
 }
+
+const handlenavigate = () => {
+  if (userInfo?.ProfileSetup) {
+    navigate('/chat') 
+  } else {
+    toast.error("Please setup Profile")
+  }
+}
+
+const handleFileInputClick = () => { //@ts-ignore
+  fileInput.current.click() 
+}
+
+const handleImageChange = async(event) => {
+  const file = event.target.files[0] ;
+  console.log({file}) 
+  if (file) {
+    const formData = new FormData() ;
+    formData.append("profile-img", file) ;
+    const response = await axios.post(`${Host}/api/auth/add-profile-img`, formData, {withCredentials : true})
+    if(response.status === 200) {
+      const profileUser = {
+        ...userInfo,
+        image : response.data.image
+        
+      };          //@ts-ignore
+      setUserinfo(profileUser)
+      toast.success("Image updated successfully")
+    }
+   
+  }
+}
+
+const handleImageDelete = async() => {
+//   try {
+//   const response = await axios.delete(`${Host}/api/auth/remove-profile`, {
+//     withCredentials: true,
+//   });
+
+//   if (response.status === 200) {
+//     // Update user info and clear image
+//     const profileUser = {
+//       ...userInfo,
+//       image: "", // or a default image URL if needed
+//     };
+//     // @ts-ignore
+//     setUserinfo(profileUser);
+//     // @ts-ignore
+//     setimage(null); // remove preview image
+//     toast.success("Image deleted successfully");
+//   }
+// } catch (error) {
+//   console.error("Error deleting image:", error);
+//   toast.error("Failed to delete image");
+// }
+setimage("");
+toast.success("Image deleted successfully");
+}
+
     return (
       <>
       <div className="bg-slate-700 h-[100vh] flex items-center justify-center flex-col gap-10">
         <div className="flex flex-col gap-10 w-[80vw] md:w-max">
-          <div>
+          <div onClick={handlenavigate}>
             <IoArrowBack className="text-4xl lg:text-6xl text-white cursor-pointer"></IoArrowBack>
           </div>
           <div className="grid grid-cols-2">
@@ -86,7 +149,7 @@ const savechanges = async() => {
              onMouseEnter={() => sethovered(true)}   
              onMouseLeave={() => sethovered(false)}
              >
-             <Avatar className="h-32 w-32 md:w-40 md:h-40 rounded-full overflow-visible"> {
+             <Avatar className="h-32 w-32 md:w-40 md:h-40 rounded-full overflow-hidden"> {
               image ? 
             <AvatarImage src={image || "/placeholder.svg"} alt="profile" className="object-cover w-full h-full bg-black" /> : (
              <div className={`uppercase h-32 w-32 rounded-full font-semibold md:h-40 md:w-40 text-5xl flex items-center justify-center ${getColor(selectedcolor)}`}>                                        
@@ -96,12 +159,13 @@ const savechanges = async() => {
             </Avatar>
             {
               hovered && (
-                <div className="absolute inset-0 flex items-center justify-center bg-black/50 ring-fuchsia-50 rounded-full cursor-pointer">
+                <div onClick={image ? handleImageDelete : handleFileInputClick  } className="absolute inset-0 flex items-center justify-center bg-black/50 ring-fuchsia-50 rounded-full cursor-pointer">
                   {image ? <FaTrash className="text-white text-3xl"/> : <FaPlus className="text-white text-3xl"/>}
                 </div>
-              )
-            }
-            
+              )}
+              <input type="file" ref={fileInput} className="hidden" onClick={handleImageChange} name="profile-img" accept=".png, .jpg, .jpeg, .svg, .webp" >
+                
+              </input>
             </div>
             <div className="flex min-w-32 md:w-64 flex-col gap-5 text-white items-center justify-center">
               <div className="w-full">

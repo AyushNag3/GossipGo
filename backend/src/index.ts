@@ -10,6 +10,7 @@ app.use(cors({
 }));
 app.use(cookieParser())
 
+app.use('/uploads/profiles', express.static("uploads/profiles"))
 app.use('/api/auth', authRoute)
 app.get('/', (req,res) => {
     res.send("Hello from")

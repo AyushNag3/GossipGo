@@ -3,6 +3,9 @@ import bcrypt from "bcryptjs"
 import { Jwt } from "jsonwebtoken";
 let jwt = require('jsonwebtoken');
 import { PrismaClient } from "../../generated/prisma";
+import { mkdirSync, existsSync, renameSync } from 'fs';
+import path from 'path';
+
 const prisma = new PrismaClient()
 
 const createToken = (email:String,userId: number) => {
@@ -109,6 +112,7 @@ export const login = async(req:Request, res:Response, next:NextFunction) => {
 
 interface customtype extends Request{
   userId? : string
+  file? : React.ReactNode
 }
 
 export const getUserInfo = async(req:customtype, res:Response, next:NextFunction) => {
@@ -142,6 +146,108 @@ export const getUserInfo = async(req:customtype, res:Response, next:NextFunction
 
 export const UpdateProfile = async (req:customtype, res:Response, next:NextFunction) => {
   
+  try {
+   
+    const firstname = req.body.firstname ;
+    const lastname = req.body.lastname ;
+    const  selectedcolor = req.body.selectedcolor ;
+
+   // console.log(firstname + lastname + selectedcolor)
+    if (!firstname || !lastname || (selectedcolor<0)) {
+      return res.status(400).send("FirstName and LastName and Color is required")
+    }
+                               //@ts-ignore
+const demo = await prisma.User.findFirst({
+  where : {           
+    id : (req.userId)
+}
+})
+if (!demo) {
+  return res.status(404).send("User with the given id not found")
+}
+                          //@ts-ignore
+    const user = await prisma.User.update({
+      where: {
+        email : demo.email
+      },
+      data: {
+        FirstName : firstname,
+        LastName : lastname ,
+        color : selectedcolor,
+        ProfileSetup : true
+      },
+    })
+
+return res.status(200).json({
+id : user.id ,
+email : user.email ,
+password : user.password ,
+FirstName : user.FirstName,
+LastName : user.LastName ,
+image : user.image,
+color : user.color ,
+ProfileSetup : user.ProfileSetup
+})
+}
+catch(error) {
+console.log({error}) ;
+return res.status(500).send("Internal Server Error")
+}
+}
+
+export const addprofileimage = async (req:customtype, res:Response, next:NextFunction) => {
+
+
+  
+    try {
+      if (!req.file) {
+        return res.status(400).send("File is required");
+      }
+  
+      const date = Date.now();
+      const uploadsDir = path.join(__dirname, '..', 'uploads', 'profiles');
+                                      //@ts-ignore
+      const filename = date + req.file.originalname;
+      const newFilePath = path.join(uploadsDir, filename);
+  
+      // ✅ Ensure the uploads/profiles folder exists
+      if (!existsSync(uploadsDir)) {
+        mkdirSync(uploadsDir, { recursive: true });
+      }
+  
+      // ✅ Rename/move the file
+                         //@ts-ignore
+      renameSync(req.file.path, newFilePath);
+  
+      // @ts-ignore
+      const demo = await prisma.User.findFirst({
+        where: {
+          id: req.userId,
+        },
+      });
+  
+      const updatedUser = await prisma.user.update({
+        where: {
+          email: demo.email,
+        },
+        data: {
+          image: `uploads/profiles/${filename}`, // Store relative path
+        },
+      });
+  
+      return res.status(200).json({
+        image: updatedUser.image,
+      });
+  
+    } catch (error) {
+      console.error(error);
+      return res.status(500).json({ message: "Something went wrong" });
+    }
+  };
+  
+
+export const deleteprofileimage = async(req:customtype, res:Response, next:NextFunction) => {
+
   try {
    
     const firstname = req.body.firstname ;
