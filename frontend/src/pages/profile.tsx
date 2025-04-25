@@ -35,7 +35,9 @@ export const Profile = () => {
       setselectedcolor(userInfo.color)
     }
     if (userInfo?.image) {
-      setimage(`${Host}/uploads/profiles/${userInfo.image}`)
+      const newImageUrl = `../../images/${userInfo.image}`;
+    console.log("Setting image to:", newImageUrl);
+    setimage(newImageUrl);
     }
   }, [userInfo])
   //@ts-ignore
@@ -94,7 +96,7 @@ export const Profile = () => {
   const handleFileInputClick = async () => {
     //@ts-ignore
     fileInput.current.click()
-    setTimeout(() => {}, 10000)
+   
   }
 
   const handleImageChange = async (event) => {
@@ -145,8 +147,8 @@ export const Profile = () => {
               onMouseLeave={() => sethovered(false)}
             >
               <Avatar className="h-32 w-32 md:w-40 md:h-40 rounded-full overflow-hidden">
-                {" "}
-                {image ? (
+               
+                {image ? ( 
                   <AvatarImage src={image || ""} alt="profile" className="object-cover w-full h-full bg-black" />
                 ) : (
                   <div

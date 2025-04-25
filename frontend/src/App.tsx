@@ -10,14 +10,9 @@ import { UseStore } from './zustand/store/store';
 import axios from 'axios';
 import { Host } from "@/utils/constant"
 import { get_user_info } from '@/utils/constant';
+import { Skeleton } from "@/components/ui/skeleton"
 
-// const verifytokenNotAmiddleware = async(req:Request, res:Response) => {
-//   if (req.cookies.jwt_cookie) {
-//    return true ;
-//   } 
-//   else return false ;
-//  }
- 
+
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   const { userInfo, setUserinfo } = UseStore();
   const [loading, setLoading] = useState(true);
@@ -49,7 +44,7 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
   }, [setUserinfo]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Skeleton/>
   }
 
   if (verified) {
