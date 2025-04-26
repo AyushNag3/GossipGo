@@ -3,9 +3,9 @@ import { Request, Response, NextFunction } from "express";
 import './App.css'
 import { Button } from './components/ui/button'
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { Auth } from './pages/auth';
-import { Chat } from './pages/chat';
-import { Profile } from './pages/profile';
+import { Auth } from './pages/auth/auth';
+import { Chat } from './pages/chat/chat';
+import { Profile } from './pages/profile/profile';
 import { UseStore } from './zustand/store/store';
 import axios from 'axios';
 import { Host } from "@/utils/constant"

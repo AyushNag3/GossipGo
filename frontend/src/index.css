@@ -1,5 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=Comic+Relief:wght@400;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
+
+
+@theme {
+  --font-comic : Comic Relief,"sans-serif"
+}
 
 @custom-variant dark (&:is(.dark *));
 :root {

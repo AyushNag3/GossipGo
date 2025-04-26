@@ -4,7 +4,7 @@ import { UseStore } from "@/zustand/store/store" // importing from store.tsx
 import { useEffect, useState, useRef } from "react"
 import { useNavigate } from "react-router-dom"
 import { IoArrowBack } from "react-icons/io5"
-import { Avatar, AvatarImage } from "../components/ui/avatar"
+import { Avatar, AvatarImage } from "../../components/ui/avatar"
 import { colors, getColor } from "@/lib/utils"
 import { FaPlus } from "react-icons/fa"
 import { FaTrash } from "react-icons/fa"
@@ -120,8 +120,8 @@ export const Profile = () => {
         }
                  //@ts-ignore
         setUserinfo(profileUser)
-        console.log(`${response.data.image}`)
-        setimage(`${Host}/uploads/profiles/${response.data.image}`)
+        console.log(`${response.data.image}+fuck`)
+       
         toast.success("Image updated successfully")
       }
     } catch (error) {
