@@ -1,4 +1,4 @@
-
+import { GiMagicHat } from "react-icons/gi";
 
 export const ContactsContainer = () => {
     return (
@@ -11,14 +11,18 @@ export const ContactsContainer = () => {
             <Title text={"Direct Messages"}/>
           </div>
          </div>
+        <div className="my-5">
+           <div className="flex items-center justify-center pr-10 ">
+             <Title text={"Channels"}></Title>
+           </div>
+        </div>
      </div>
     )
  }
-
     const Logo = () => {
         return (
           <div className="flex p-5  justify-start items-center gap-2">
-             <img src="../../../../assets/react.svg" height={72} width={34} alt="" />
+             <GiMagicHat className="text-6xl"/>
             <span className="text-3xl font-semibold ">Gossip Go</span>
           </div>
         );
