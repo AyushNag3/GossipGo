@@ -1,4 +1,5 @@
 import { GiMagicHat } from "react-icons/gi";
+import { ProfileInfo } from "./components/profile info";
 
 export const ContactsContainer = () => {
     return (
@@ -16,6 +17,7 @@ export const ContactsContainer = () => {
              <Title text={"Channels"}></Title>
            </div>
         </div>
+        <ProfileInfo/> 
      </div>
     )
  }

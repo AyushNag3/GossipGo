@@ -5,6 +5,7 @@ import { verifytoken } from "../middlewares/authmiddlewares"
 import { getUserInfo } from "../controllers/authcontrollers"
 import { addprofileimage } from "../controllers/authcontrollers"
 import { deleteprofileimage } from "../controllers/authcontrollers"
+import { logout } from "../controllers/authcontrollers"
 
 import fs from "fs"
 import multer, { type FileFilterCallback } from "multer"
@@ -44,4 +45,5 @@ authRoute.post("/login", login) //@ts-ignore
 authRoute.get("/userinfo", verifytoken, getUserInfo) //@ts-ignore
 authRoute.post("/profile", verifytoken, UpdateProfile) //@ts-ignore
 authRoute.post("/add-profile-img", verifytoken, upload.single("profile-img"), addprofileimage) //@ts-ignore
-authRoute.post("/remove-profile-img", verifytoken, deleteprofileimage)
+authRoute.delete("/remove-profile-img", verifytoken, deleteprofileimage) //@ts-ignore
+authRoute.post("/logout", logout)

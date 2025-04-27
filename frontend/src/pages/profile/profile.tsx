@@ -131,6 +131,12 @@ export const Profile = () => {
   }
   const handleImageDelete = async () => {
     setimage("")
+    // const response = await axios.post(`${Host}/api/auth/remove-profile-img`, formData, {
+    //   withCredentials: true,
+    //   headers: {
+    //     "Content-Type": "multipart/form-data",
+    //   },
+    // })
     toast.success("Image deleted successfully")
   }
   return (
