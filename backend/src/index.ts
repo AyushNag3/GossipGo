@@ -15,15 +15,6 @@ app.use(
 )
 app.use(cookieParser())
 
-// Ensure uploads directory exists
-// const uploadsDir = path.join(__dirname, "uploads", "profiles")
-// if (!fs.existsSync(uploadsDir)) {
-//   fs.mkdirSync(uploadsDir, { recursive: true })
-// }
-
-// Fix the static file serving path - this is critical
-// The URL path needs to match what the frontend is requesting
-// app.use("/uploads/profiles", express.static(path.join(__dirname, "uploads", "profiles")))
 
 app.use("/api/auth", authRoute)
 app.get("/", (req, res) => {

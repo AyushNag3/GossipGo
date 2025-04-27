@@ -130,13 +130,20 @@ export const Profile = () => {
     }
   }
   const handleImageDelete = async () => {
-    setimage("")
-    // const response = await axios.post(`${Host}/api/auth/remove-profile-img`, formData, {
-    //   withCredentials: true,
-    //   headers: {
-    //     "Content-Type": "multipart/form-data",
-    //   },
-    // })
+    try {
+      const response = await axios.post(`${Host}/api/auth/remove-profile-img`,{}, {withCredentials : true});
+      if (response.status === 200 ) {
+        const updatedUser = {
+          ...userInfo, 
+          image : null
+        }
+        setUserinfo(updatedUser)
+        setimage(null)
+      }
+      
+    } catch (error) {
+      console.error('Error deleting user:', error);
+    }
     toast.success("Image deleted successfully")
   }
   return (

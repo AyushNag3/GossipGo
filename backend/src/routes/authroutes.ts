@@ -45,5 +45,5 @@ authRoute.post("/login", login) //@ts-ignore
 authRoute.get("/userinfo", verifytoken, getUserInfo) //@ts-ignore
 authRoute.post("/profile", verifytoken, UpdateProfile) //@ts-ignore
 authRoute.post("/add-profile-img", verifytoken, upload.single("profile-img"), addprofileimage) //@ts-ignore
-authRoute.delete("/remove-profile-img", verifytoken, deleteprofileimage) //@ts-ignore
+authRoute.post("/remove-profile-img", verifytoken, deleteprofileimage) //@ts-ignore
 authRoute.post("/logout", logout)

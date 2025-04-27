@@ -9,14 +9,14 @@ import { Host } from "@/utils/constant"
 import axios from "axios"
 
 
-
 export const ProfileInfo = () => {
     const navigate = useNavigate()
     const {userInfo, setUserinfo} = UseStore()
 
-    const Logout = () => {
+    const Logout = async() => {
        try {
         const response = await axios.post(`${Host}/api/auth/logout`,{}, {withCredentials : true} )
+        console.log(response)
         if (response.status === 200) {
             navigate('/auth') ; setUserinfo(null)
         }
@@ -37,12 +37,10 @@ export const ProfileInfo = () => {
                  <div
                    className={`uppercase h-12 w-12 rounded-full font-semibold  text-lg flex items-center justify-center ${getColor(userInfo?.color)}`}
                  >
-                   {userInfo?.FirstName ? FirstName[0] : userInfo.email?.[0] || "A"}
+                   {userInfo?.FirstName ? userInfo.FirstName[0] : userInfo.email?.[0] || "A"}
                  </div>
                )}
              </Avatar>
-            
-                
               </div>
               {
                 userInfo?.FirstName && userInfo.LastName ? `${userInfo.FirstName} ${userInfo.LastName} ` : " "
@@ -62,7 +60,7 @@ export const ProfileInfo = () => {
               <TooltipProvider>
                 <Tooltip>
                     <TooltipTrigger>
-                        <IoLogOutOutline className="text-purple-500 text-xl font-medium" onClick={()=> {Logout}} />
+                        <IoLogOutOutline className="text-purple-500 text-xl font-medium" onClick={Logout} />
                     </TooltipTrigger>
                     <TooltipContent className="bg-[#1c1b1e] border-none text-white">
                     Logout

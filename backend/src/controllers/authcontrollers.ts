@@ -228,14 +228,7 @@ export const addprofileimage = async (req: customtype, res: Response, next: Next
 
 export const deleteprofileimage = async (req: customtype, res: Response, next: NextFunction) => {
   try {
-    const firstname = req.body.firstname
-    const lastname = req.body.lastname
-    const selectedcolor = req.body.selectedcolor
 
-    // console.log(firstname + lastname + selectedcolor)
-    if (!firstname || !lastname || selectedcolor < 0) {
-      return res.status(400).send("FirstName and LastName and Color is required")
-    }
     //@ts-ignore
     const demo = await prisma.User.findFirst({
       where: {
@@ -251,10 +244,6 @@ export const deleteprofileimage = async (req: customtype, res: Response, next: N
         email: demo.email,
       },
       data: {
-        FirstName: firstname,
-        LastName: lastname,
-        color: selectedcolor,
-        ProfileSetup: true,
         image: null,
       },
     })
