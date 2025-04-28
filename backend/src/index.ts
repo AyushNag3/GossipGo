@@ -5,6 +5,7 @@ import { authRoute } from "./routes/authroutes"
 import { ContactRoutes } from "./routes/contactroutes"
 import path from "path"
 import fs from "fs"
+import { setupsocket } from "./socket"
 
 const app = express()
 app.use(express.json())
@@ -23,5 +24,7 @@ app.get("/", (req, res) => {
   res.send("Hello from")
 })
 
-const port = process.env.PORT || 8000 // Make sure this uses the environment variable
-app.listen(port, () => console.log(`Server is listening to port ${port}`))
+const server = process.env.PORT || 8000 // Make sure this uses the environment variable
+app.listen(server, () => console.log(`Server is listening to port ${server}`))
+
+setupsocket(server)

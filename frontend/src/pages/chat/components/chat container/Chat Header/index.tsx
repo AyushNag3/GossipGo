@@ -4,12 +4,12 @@ import { Avatar,AvatarFallback,AvatarImage } from "@/components/ui/avatar";
 import { getColor } from "@/lib/utils";
 
 export const ChatHeader = () => {
-  const {closeChat, selectedChatData} = UseStore()
+  const {closeChat, selectedChatData, selectedChatType} = UseStore()
 
     return (
         <div className="h-[10vh] border-b-2 border-[#2f303b] flex items-center justify-between px-20">
            <div className="flex gap-5 items-center">
-            <div className="flex gap-3 items-center justify-center">
+            <div className="flex gap-3 items-center justify-center bg-black">
             <div className="w-12 h-12 relative">
                <Avatar className="h-12 w-12  rounded-full overflow-hidden">
                            
@@ -23,7 +23,8 @@ export const ChatHeader = () => {
                         </div>
                   )}
                   </Avatar>
-                        </div>
+             </div>
+             <div>{selectedChatType === "contact" && `${selectedChatData.FirstName} ${selectedChatData.LastName}`}</div>
                <div className="flex items-center justify-center gap-5 ">
                 <button className="text-neutral-500 p-0 focus:border-none focus:outline-none  hover:text-white duration-300 transition-all"
                 onClick={closeChat}>
