@@ -32,7 +32,7 @@ export const ProfileInfo = () => {
                 <Avatar className="h-12 w-12  rounded-full overflow-hidden">
                
                {userInfo.image ? ( 
-                 <AvatarImage src={`../../images/${userInfo.image}` || ""} alt="profile" className="object-cover w-full h-full bg-black" />
+                 <AvatarImage src={`../../../../../../images/${userInfo.image}` || ""} alt="profile" className="object-cover w-full h-full bg-black" />
                ) : (
                  <div
                    className={`uppercase h-12 w-12 rounded-full font-semibold  text-lg flex items-center justify-center ${getColor(userInfo?.color)}`}

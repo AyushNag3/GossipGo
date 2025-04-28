@@ -4,7 +4,7 @@ import type { Request, Response, NextFunction } from "express"
 
 export const SearchContact = async (req:Request, res: Response, next : NextFunction) => {
     try {
-       const {searchterm} = req.body ;
+       const searchterm = req.body.searchTerm ;
         if (searchterm === undefined || searchterm === null) {
            return res.status(400).send("SearchTerm is required. ")
         }
@@ -12,7 +12,7 @@ export const SearchContact = async (req:Request, res: Response, next : NextFunct
                 where: {
                   AND: [
                     {
-                      id: {
+                      id: {      //@ts-ignore
                         not: req.userId,
                       },
                     },
