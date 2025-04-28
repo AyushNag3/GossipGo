@@ -1,6 +1,8 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useState } from "react"
 import { FaPlus } from "react-icons/fa"
+import Lottie, { useLottie } from "lottie-react";
+import animation from "../../../../../../assets/animation.json"
 import {
     Dialog,
     DialogContent,
@@ -11,11 +13,26 @@ import {
   } from "@/components/ui/dialog"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
-
+import axios from "axios";
   
 export const NewDm = () => {
 
-   const [opennewContainerModel, setopennewContainerModel] = useState(false)
+   const [opennewContainerModel, setopennewContainerModel] = useState(false);
+   const [SearchContact, setSearchContact] = useState([]) ;
+   const searchcontacts = async(searchTerm) => {
+       try {
+           if (searchTerm.length > 0 )
+       } 
+       catch(error) {
+
+       }
+   }
+
+   const options = {
+    animationData: animation,
+    loop : true, 
+    autoplay : true
+  };
 
     return(
         <div>
@@ -33,7 +50,7 @@ export const NewDm = () => {
 
             <Dialog open={opennewContainerModel} onOpenChange={setopennewContainerModel}>
                 
-                <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[400px] flex flex-col">
+                <DialogContent className="bg-[#181920] border-none text-white w-[400px] h-[600px] flex flex-col">
                     <DialogHeader>
                     <DialogTitle>Please select a Contact</DialogTitle>
                     <DialogDescription>
@@ -41,8 +58,26 @@ export const NewDm = () => {
                     </DialogDescription>
                     </DialogHeader>
                     <div>
-                        <input type="text" placeholder="Search Contacts" className="rounded-lg w-full p-6 bg-[#2c2e3b] border-none"/>
+                        <input type="text" placeholder="Search Contacts" className="rounded-lg w-full p-6
+                         bg-[#2c2e3b] border-none focus:outline-none"  onChange={(e)=> {searchcontacts(e.target.value)}}/>
                     </div>
+
+                   {SearchContact.length <= 0 && (
+                   <div>
+                   <Lottie  animationData={animation} height={100} width={100} loop={true} autoplay={true}/>
+                        <div className="text-opacity-80 text-white flex flex-col gap-5 items-center 
+                        lg:text-xl text-lg transition-all duration-300 text-center font-comic">
+                            <h3 className="font-extrabold">
+                                <span>
+                                Hi <span className="text-purple-500">! </span>
+                                Search New  
+                                <span className="text-purple-500"> Contact </span>
+                                </span>
+                            </h3>
+                        </div>
+                     </div>
+             ) }
+
                 </DialogContent>
             </Dialog>
 

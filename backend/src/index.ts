@@ -2,6 +2,7 @@ import express from "express"
 import cors from "cors"
 import cookieParser from "cookie-parser"
 import { authRoute } from "./routes/authroutes"
+import { ContactRoutes } from "./routes/contactroutes"
 import path from "path"
 import fs from "fs"
 
@@ -17,6 +18,7 @@ app.use(cookieParser())
 
 
 app.use("/api/auth", authRoute)
+app.use("/api/contacts", ContactRoutes)
 app.get("/", (req, res) => {
   res.send("Hello from")
 })
