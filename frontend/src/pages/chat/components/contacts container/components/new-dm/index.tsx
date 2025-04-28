@@ -21,7 +21,7 @@ import { Host } from "@/utils/constant";
 import { getColor } from "@/lib/utils";
   
 export const NewDm = () => {
-
+   const {setSelectedChatType, setSelectedChatData} = UseStore()
    const [opennewContainerModel, setopennewContainerModel] = useState(false);
    const [SearchContact, setSearchContact] = useState([]) ;
    const searchcontacts = async(searchTerm : any) => {
@@ -51,6 +51,8 @@ export const NewDm = () => {
 
 const selectedNewContact = (contact) => {
 setopennewContainerModel(false) ;
+setSelectedChatType("contact") ;
+setSelectedChatData(contact)
 setSearchContact([])
 }
 
@@ -79,6 +81,7 @@ setSearchContact([])
                         <input type="text" placeholder="Search Contacts" className="rounded-lg w-full px-6 py-4
                          bg-[#2c2e3b] border-none focus:outline-none"  onChange={(e)=> {searchcontacts(e.target.value)}}/>
                     </div>
+                    {SearchContact.length >0 &&  (
                     <ScrollArea className="h-[250px]">
                         <div className="flex flex-col gap-5">
                            {SearchContact.map((contact) => (
@@ -97,7 +100,7 @@ setSearchContact([])
                                         </div>
                                     )}
                                     </Avatar>
-                                    </div>
+                        </div>
                                     <div className="flex flex-col ">
                                     <span>{contact?.FirstName && contact?.LastName ? `${contact.FirstName} ${contact.LastName}` : contact.email}</span>
                                     <span className="text-sm">{contact.email}</span>
@@ -106,6 +109,7 @@ setSearchContact([])
                            ))}
                         </div>
                     </ScrollArea>
+)}
                    {SearchContact.length <= 0 && (
                    <div>
                    <Lottie  animationData={animation} height={100} width={100} loop={true} autoplay={true}/>

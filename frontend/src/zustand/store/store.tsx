@@ -30,8 +30,6 @@ interface States extends ChatStates {
   setUserinfo: (userInfo: UserInfo | null) => void;
 }
 
-
-
 // Your chat slice
 export const createChatSlice = (set: any, get: any) => ({
   selectedChatType: undefined,
@@ -56,11 +54,11 @@ export const UseStore = create<States>()(
       ...createChatSlice(set, get),  // <-- ✅ add this
     }),
     {
-      name: "user-info", // localStorage key
-      partialize: (state) => ({
-        userInfo: state.userInfo,
-        // Optional: If you don't want to persist chat slice
-      }),
+      name: "user-info", 
+      // partialize: (state) => ({
+      //   userInfo: state.userInfo,
+      //   // Optional: If you don't want to persist chat slice
+      // }),
     }
   )
 );
