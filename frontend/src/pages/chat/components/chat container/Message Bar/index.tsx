@@ -4,12 +4,17 @@ import { RiEmojiStickerFill } from "react-icons/ri";
 import { IoIosSend } from "react-icons/io";
 import EmojiPicker from 'emoji-picker-react';
 import { Theme } from "emoji-picker-react";
+import { useSocket } from "@/Context/SocketContext";
+import { UseStore } from "@/zustand/store/store";
 
 
 export const MessageBar = () => {
     const [message, setmessage] = useState("")
     const emojiref = useRef("")
     const [emojipick, setemojipick ]  = useState(false) 
+    const socketRef = useSocket();
+    const socket = socketRef?.current;
+    const {selectedChatType, selectedChatData, userInfo} = UseStore()
 
     useEffect( () => {
         function handleclickoutside(event) {
@@ -27,8 +32,24 @@ export const MessageBar = () => {
         setmessage((msg) => msg+emoji.emoji)
     }    
     const {LIGHT,DARK,AUTO} = Theme ;
+
     const handlesendmsg = async() => {
 
+        if (!socket || !message.trim()) {
+            console.log(socket)
+            console.error("Socket not connected or message is empty")
+            return
+          }
+         if (selectedChatType === "contact") {
+            socket.emit("sendMessage" , {
+            sender : userInfo.id.toString() ,
+            content : message ,
+            recipient : selectedChatData.id,
+            messageType : "text",
+            fileUrl : undefined
+         })
+         setmessage("")
+        }
     }
 
     return (

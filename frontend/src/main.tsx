@@ -6,7 +6,6 @@ import { Toaster } from './components/ui/sonner.tsx'
 import { SocketProvider } from './Context/SocketContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
-
  
     <SocketProvider>
     <App />

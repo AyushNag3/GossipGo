@@ -2,7 +2,6 @@ import { createContext, useEffect, useRef, useContext } from "react"
 import { UseStore } from "@/zustand/store/store";
 import { Host } from "@/utils/constant";
 import {io} from "socket.io-client"
-import { useStore } from "zustand";
 
 
 const SocketContext = createContext(null) ;
@@ -13,7 +12,7 @@ export const useSocket = () => {
 
 export const SocketProvider = ({children}) => {
   const socket = useRef() ;
-  const {userInfo, selectedChatData, selectedChatType} = UseStore()  ;
+  const {userInfo, selectedChatData, selectedChatType, addMessage} = UseStore.getState()  ;
   
   useEffect( () => {
     if (userInfo) {
@@ -26,11 +25,13 @@ export const SocketProvider = ({children}) => {
         })
 
        const handleReceiveMessage = (message : any) => {
-        const { selectedChatData, selectedChatType, addMessage} = UseStore()  ;
+        const { selectedChatData, selectedChatType, addMessage} = UseStore.getState()  ;
           if (selectedChatType !== undefined &&
              (selectedChatData.id === message.sender.id ||
-               selectedChatData.id === message.recipient.id))
+               selectedChatData.id === message.recipient.id)
+              )
            {
+             console.log("message rcv", message)
              addMessage(message)
           }
        }
@@ -42,7 +43,7 @@ export const SocketProvider = ({children}) => {
   }, [userInfo])
 
   return (
-    <SocketContext.Provider value={socket.current} > 
+    <SocketContext.Provider value={socket} > 
        {children}
     </SocketContext.Provider>
   )
