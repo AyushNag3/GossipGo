@@ -1,7 +1,7 @@
 import { createContext, useEffect, useRef, useContext } from "react"
 import { UseStore } from "@/zustand/store/store";
 import { Host } from "@/utils/constant";
-
+import {io} from "socket.io-client"
 
 const SocketContext = createContext(null) ;
 
@@ -11,7 +11,7 @@ export const useSocket = () => {
 
 export const SocketProvider = ({children}) => {
   const socket = useRef() ;
-  const {userInfo} = UseStore() ;
+  const {userInfo} = UseStore()  ;
   
   useEffect( () => {
     if (userInfo) {
@@ -22,7 +22,7 @@ export const SocketProvider = ({children}) => {
         socket.current.on("connect", () => {
             console.log("Connected to socket server")
         })
-        
+
         return () => {
          socket.current.disconnect() ;
         }

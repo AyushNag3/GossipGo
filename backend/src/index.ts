@@ -24,7 +24,7 @@ app.get("/", (req, res) => {
   res.send("Hello from")
 })
 
-const server = process.env.PORT || 8000 // Make sure this uses the environment variable
-app.listen(server, () => console.log(`Server is listening to port ${server}`))
+const port = process.env.PORT || 8000 // Make sure this uses the environment variable
+const server = app.listen(port, () => console.log(`Server is listening to port ${port}`))
 
 setupsocket(server)

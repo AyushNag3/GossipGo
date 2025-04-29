@@ -117,6 +117,16 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.MessageScalarFieldEnum = {
+  id: 'id',
+  senderId: 'senderId',
+  recipientId: 'recipientId',
+  messageType: 'messageType',
+  content: 'content',
+  fileUrl: 'fileUrl',
+  timestamp: 'timestamp'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -142,9 +152,13 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
-
+exports.MessageType = exports.$Enums.MessageType = {
+  text: 'text',
+  file: 'file'
+};
 
 exports.Prisma.ModelName = {
+  Message: 'Message',
   User: 'User'
 };
 

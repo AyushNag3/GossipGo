@@ -1,15 +1,16 @@
-import { disconnect } from "process";
+import cors from "cors"
 import { Server as SocketIoServer } from "socket.io"
+ //@ts-ignore
 export const setupsocket = (server) => {
   const io = new SocketIoServer(server, {
     cors :{
     origin: "http://localhost:5173",
     credentials: true,
     },
-})}
+})
 
 const userSocketMap = new Map() ;
-
+                //@ts-ignore
 const disconnect = (socket) => {
 console.log(`Client Disconnected : ${socket.id}`) ;
 for (const [userId, socketId] of userSocketMap.entries()) {
@@ -19,15 +20,17 @@ for (const [userId, socketId] of userSocketMap.entries()) {
     }
 }
 }
-
+  //@ts-ignore
 io.on("connection", (socket)=> {
     const userId = socket.handshake.query.userId ;
-    console.log(`User connected : ${userId} with socket ID : ${socket.id}`)
+ 
     if (userId) {
         userSocketMap.set(userId,socket.id)
+        console.log(`User connected : ${userId} with socket ID : ${socket.id}`)
     } else {
         console.log("User Id not provided during connection ")
     }
 
     socket.on("disconnect", () => disconnect(socket))
 })
+}
