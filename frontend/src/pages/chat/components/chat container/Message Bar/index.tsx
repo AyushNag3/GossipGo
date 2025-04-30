@@ -42,7 +42,7 @@ export const MessageBar = () => {
           }
          if (selectedChatType === "contact") {
             socket.emit("sendMessage" , {
-            sender : userInfo.id.toString() ,
+            sender : userInfo.id ,
             content : message ,
             recipient : selectedChatData.id,
             messageType : "text",

@@ -2,6 +2,7 @@ import { Server as SocketIoServer } from "socket.io"
 import { PrismaClient } from "../generated/prisma"
 import type { MessageType } from "../generated/prisma"
 
+
 const prisma = new PrismaClient()
 
 // @ts-ignore
@@ -27,6 +28,7 @@ export const setupsocket = (server) => {
   }
 
   const sendMessage = async (message: any) => {
+    console.log(message)
     const senderSocketId = userSocketMap.get(message.sender)
     const recipientSocketId = userSocketMap.get(message.recipient)
 

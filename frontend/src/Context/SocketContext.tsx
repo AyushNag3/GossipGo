@@ -11,7 +11,7 @@ export const useSocket = () => {
 }
 
 export const SocketProvider = ({children}) => {
-  const socket = useRef() ;
+  const socket = useRef(null) ;
   const {userInfo, selectedChatData, selectedChatType, addMessage} = UseStore.getState()  ;
   
   useEffect( () => {
@@ -35,7 +35,7 @@ export const SocketProvider = ({children}) => {
              addMessage(message)
           }
        }
-
+       socket.current.on("receiveMessage", handleReceiveMessage)
         return () => {
          socket.current.disconnect() ;
         }
