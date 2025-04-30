@@ -29,8 +29,8 @@ export const setupsocket = (server) => {
 
   const sendMessage = async (message: any) => {
     console.log(message)
-    const senderSocketId = userSocketMap.get(message.sender)
-    const recipientSocketId = userSocketMap.get(message.recipient)
+    const senderSocketId = userSocketMap.get(String(message.sender))
+    const recipientSocketId = userSocketMap.get(String(message.recipient))
 
     // Fix: Properly structure the data object for Prisma
                                  //@ts-ignore
@@ -71,7 +71,12 @@ export const setupsocket = (server) => {
         },
       },
     })
-
+  //  
+   if (!recipientSocketId && !senderSocketId) {
+    console.warn(`No socket found for either sender or recipient , ${recipientSocketId} , ${senderSocketId}`);
+  }
+  else console.log(`${recipientSocketId} , ${senderSocketId}`)
+  
     if (recipientSocketId) {
       io.to(recipientSocketId).emit("receiveMessage", messageData)
     }

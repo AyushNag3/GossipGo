@@ -68,11 +68,13 @@ export const UseStore = create<States>()(
       ...createChatSlice(set, get),  // <-- ✅ add this
     }),
     {
-      name: "user-info", 
-      // partialize: (state) => ({
-      //   userInfo: state.userInfo,
-      //   // Optional: If you don't want to persist chat slice
-      // }),
+      name: "user-info",
+      partialize: (state) => ({
+        userInfo: state.userInfo,
+        selectedChatType: state.selectedChatType,
+        selectedChatData: state.selectedChatData,
+        selectedChatMessages: state.selectedChatMessages,
+      }),
     }
   )
 );

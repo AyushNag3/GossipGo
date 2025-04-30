@@ -34,7 +34,7 @@ export const MessageBar = () => {
     const {LIGHT,DARK,AUTO} = Theme ;
 
     const handlesendmsg = async() => {
-
+        const { selectedChatMessages, setSelectedChatMessages } = UseStore.getState();
         if (!socket || !message.trim()) {
             console.log(socket)
             console.error("Socket not connected or message is empty")
@@ -48,6 +48,14 @@ export const MessageBar = () => {
             messageType : "text",
             fileUrl : undefined
          })
+           const completedatamessage = {
+            sender : userInfo.id ,
+            content : message ,
+            recipient : selectedChatData.id,
+            messageType : "text",
+            fileUrl : undefined
+           }
+         
          setmessage("")
         }
     }

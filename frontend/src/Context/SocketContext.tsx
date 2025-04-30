@@ -26,16 +26,21 @@ export const SocketProvider = ({children}) => {
 
        const handleReceiveMessage = (message : any) => {
         const { selectedChatData, selectedChatType, addMessage} = UseStore.getState()  ;
+        console.log(`${selectedChatData.id} , ${message.sender.id} , ${message.recipient.id} `) ;
           if (selectedChatType !== undefined &&
              (selectedChatData.id === message.sender.id ||
                selectedChatData.id === message.recipient.id)
               )
            {
-             console.log("message rcv", message)
+             // console.log("message rcv", message)
              addMessage(message)
           }
        }
-       socket.current.on("receiveMessage", handleReceiveMessage)
+       socket.current.on("receiveMessage", (message) => {
+       // console.log("🔥 receiveMessage fired", message); // Add this
+        handleReceiveMessage(message);
+      });
+       
         return () => {
          socket.current.disconnect() ;
         }
