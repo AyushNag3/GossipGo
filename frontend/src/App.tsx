@@ -55,13 +55,6 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 };
 
 
-// const AuthRoute = ({children} : {children : React.ReactNode}) => {
-//   const {userInfo} = UseStore() ; //@ts-ignore
-//   if (verifytokenNotAmiddleware())  return children
-  
-//   else return <Navigate to={"auth"} />
-// }
-
 function App() {
  const {userInfo, setUserinfo} = UseStore() ;
  const [loading, setloading] = useState(true) ;

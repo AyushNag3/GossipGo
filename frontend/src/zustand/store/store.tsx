@@ -18,9 +18,11 @@ interface ChatStates {
   selectedChatType: string | undefined;
   selectedChatData: any; 
   selectedChatMessages: any[];
+  directMessagesContacts : any[] ;
   setSelectedChatType: (selectedChatType: string | undefined) => void;
   setSelectedChatData: (selectedChatData: any) => void;
   setSelectedChatMessages: (selectedChatMessages: any[]) => void;
+  setDirectedMessagesContacts : (directMessagesContacts : any[]) => void
   closeChat: () => void;
   addMessage: (message: any) => void; 
 }
@@ -36,9 +38,11 @@ export const createChatSlice = (set: any, get: any) => ({
   selectedChatType: undefined,
   selectedChatData: undefined,
   selectedChatMessages: [],
+  directMessagesContacts : [],
   setSelectedChatType: (selectedChatType: string | undefined) => set({ selectedChatType }),
   setSelectedChatData: (selectedChatData: any) => set({ selectedChatData }),
   setSelectedChatMessages: (selectedChatMessages: any[]) => set({ selectedChatMessages }),
+  setDirectedMessagesContacts : (directMessagesContacts : any[]) => set({directMessagesContacts}) ,
   closeChat: () => set({
     selectedChatData: undefined,
     selectedChatType: undefined,
@@ -69,12 +73,6 @@ export const UseStore = create<States>()(
     }),
     {
       name: "user-info",
-      partialize: (state) => ({
-        userInfo: state.userInfo,
-        selectedChatType: state.selectedChatType,
-        selectedChatData: state.selectedChatData,
-        selectedChatMessages: state.selectedChatMessages,
-      }),
     }
   )
 );

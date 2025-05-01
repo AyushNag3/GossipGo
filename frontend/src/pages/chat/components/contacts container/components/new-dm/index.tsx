@@ -47,8 +47,6 @@ export const NewDm = () => {
     autoplay : true
   };
 
-
-
 const selectedNewContact = (contact) => {
 setopennewContainerModel(false) ;
 setSelectedChatType("contact") ;

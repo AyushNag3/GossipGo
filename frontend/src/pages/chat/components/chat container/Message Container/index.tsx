@@ -2,14 +2,35 @@ import { UseStore } from "@/zustand/store/store";
 import { useRef } from "react";
 import { useEffect } from "react";
 import moment from 'moment';
-
+import axios from "axios";
+import { Host } from "@/utils/constant";
 
 export const MessageContainer = () => {
       const ScrollRef = useRef(null)
-      const {selectedChatData, selectedChatType, userInfo, selectedChatMessages} = UseStore()
+      const {selectedChatData, selectedChatType, userInfo, selectedChatMessages,setSelectedChatMessages} = UseStore()
       console.log("Messages:", selectedChatMessages);
       console.log("MessagesType:", selectedChatType);
       console.log("MessageData:", selectedChatData);
+
+      useEffect( ()=> {
+        const getMessages = async() => {
+            try {
+               const response = await axios.post(`${Host}/api/messages/get-messages`, {id : selectedChatData.id},
+                 {withCredentials : true}) ;
+                 console.log(`${selectedChatData} || ${selectedChatType}`)
+                 if (response.data.messages) {
+                    setSelectedChatMessages(response.data.messages)
+                 }
+            }
+            catch (error) {
+                console.log(error)
+            }
+        }
+        if (selectedChatData.id) {
+            if (selectedChatType === "contact") getMessages()
+          }
+
+      }, [])
 
       useEffect(()=> {
         if (ScrollRef.current) {
@@ -37,9 +58,9 @@ export const MessageContainer = () => {
       };
 
       const renderDMmessages = (message ) => (
-        <div className={`${message.sender === selectedChatData.id ? "text-left" : "text-right"}`}> 
+        <div className={`${message.senderId === selectedChatData.id ? "text-left" : "text-right"}`}> 
         {message.messageType === "text" && (
-             <div className={`${message.sender !== selectedChatData.id ? "bg-purple-500 text-black border-purple-400" : "bg-black/5 text-white border-white/20" } border inline-block p-4 rounded my-1 max-w-[50%] break-words`}>
+             <div className={`${message.senderId !== selectedChatData.id ? "bg-slate-300 text-black border-none" : "bg-slate-800 text-white border-slate-800" } border inline-block p-4 rounded my-1 max-w-[50%] break-words`}>
                {message.content}
              </div>
         )}
