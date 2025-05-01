@@ -12,7 +12,7 @@ export const useSocket = () => {
 
 export const SocketProvider = ({children}) => {
   const socket = useRef(null) ;
-  const {userInfo, selectedChatData, selectedChatType, addMessage} = UseStore.getState()  ;
+  const {userInfo, selectedChatData, selectedChatType, addMessage} = UseStore()  ;
   
   useEffect(() => {
     // Disconnect the old socket if it exists
@@ -34,7 +34,7 @@ export const SocketProvider = ({children}) => {
       })
   
       const handleReceiveMessage = (message: any) => {
-        const { selectedChatData, selectedChatType, addMessage } = UseStore.getState()
+        
         if (
           selectedChatType !== undefined &&
           (selectedChatData?.id === message.sender?.id ||

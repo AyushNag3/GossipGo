@@ -6,10 +6,11 @@ import { Toaster } from './components/ui/sonner.tsx'
 import { SocketProvider } from './Context/SocketContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
- 
+    <StrictMode>
     <SocketProvider>
     <App />
     <Toaster  position="top-center" richColors/>
     </SocketProvider>
+    </StrictMode>
 
 )

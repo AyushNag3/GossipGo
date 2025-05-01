@@ -14,7 +14,7 @@ export const MessageBar = () => {
     const [emojipick, setemojipick ]  = useState(false) 
     const socketRef = useSocket();
     const socket = socketRef?.current;
-    const {selectedChatType, selectedChatData, userInfo} = UseStore()
+    const {selectedChatType, selectedChatData, userInfo, selectedChatMessages, setSelectedChatMessages} = UseStore()
 
     useEffect( () => {
         function handleclickoutside(event) {
@@ -34,7 +34,7 @@ export const MessageBar = () => {
     const {LIGHT,DARK,AUTO} = Theme ;
 
     const handlesendmsg = async() => {
-        const { selectedChatMessages, setSelectedChatMessages } = UseStore.getState();
+        
         if (!socket || !message.trim()) {
             console.log(socket)
             console.error("Socket not connected or message is empty")
@@ -81,7 +81,7 @@ export const MessageBar = () => {
                </div>
             </div>
             <button className="text-neutral-500 hover:text-white p-0" 
-              onClick={handlesendmsg}>
+              onClick={handlesendmsg} >
               <IoIosSend className="text-3xl"/>
             </button>
          
