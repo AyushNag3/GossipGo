@@ -14,38 +14,48 @@ export const SocketProvider = ({children}) => {
   const socket = useRef(null) ;
   const {userInfo, selectedChatData, selectedChatType, addMessage} = UseStore.getState()  ;
   
-  useEffect( () => {
+  useEffect(() => {
+    // Disconnect the old socket if it exists
+    if (socket.current) {
+      console.log("Disconnecting old socket...")
+      socket.current.disconnect()
+      socket.current = null
+    }
+  
     if (userInfo) {
-        socket.current = io(Host, {
-            withCredentials: true,
-            query : {userId : userInfo.id } ,
-        }) ;
-        socket.current.on("connect", () => {
-            console.log("Connected to socket server")
-        })
-
-       const handleReceiveMessage = (message : any) => {
-        const { selectedChatData, selectedChatType, addMessage} = UseStore.getState()  ;
-        console.log(`${selectedChatData.id} , ${message.sender.id} , ${message.recipient.id} `) ;
-          if (selectedChatType !== undefined &&
-             (selectedChatData.id === message.sender.id ||
-               selectedChatData.id === message.recipient.id)
-              )
-           {
-             // console.log("message rcv", message)
-             addMessage(message)
-          }
-       }
-       socket.current.on("receiveMessage", (message) => {
-       // console.log("🔥 receiveMessage fired", message); // Add this
-        handleReceiveMessage(message);
-      });
-       
-        return () => {
-         socket.current.disconnect() ;
+      console.log("Connecting socket for user:", userInfo.id)
+      socket.current = io(Host, {
+        withCredentials: true,
+        query: { userId: userInfo.id },
+      })
+  
+      socket.current.on("connect", () => {
+        console.log("Connected to socket server")
+      })
+  
+      const handleReceiveMessage = (message: any) => {
+        const { selectedChatData, selectedChatType, addMessage } = UseStore.getState()
+        if (
+          selectedChatType !== undefined &&
+          (selectedChatData?.id === message.sender?.id ||
+            selectedChatData?.id === message.recipient?.id)
+        ) {
+          addMessage(message)
         }
+      }
+  
+      socket.current.on("receiveMessage", handleReceiveMessage)
+    }
+  
+    return () => {
+      if (socket.current) {
+        console.log("Cleanup: Disconnecting socket...")
+        socket.current.disconnect()
+        socket.current = null
+      }
     }
   }, [userInfo])
+  
 
   return (
     <SocketContext.Provider value={socket} > 

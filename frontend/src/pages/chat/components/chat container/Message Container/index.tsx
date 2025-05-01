@@ -30,7 +30,7 @@ export const MessageContainer = () => {
             if (selectedChatType === "contact") getMessages()
           }
 
-      }, [])
+      }, [selectedChatData, selectedChatType])
 
       useEffect(()=> {
         if (ScrollRef.current) {
@@ -60,7 +60,7 @@ export const MessageContainer = () => {
       const renderDMmessages = (message ) => (
         <div className={`${message.senderId === selectedChatData.id ? "text-left" : "text-right"}`}> 
         {message.messageType === "text" && (
-             <div className={`${message.senderId !== selectedChatData.id ? "bg-slate-300 text-black border-none" : "bg-slate-800 text-white border-slate-800" } border inline-block p-4 rounded my-1 max-w-[50%] break-words`}>
+             <div className={`${message.senderId !== selectedChatData.id ? "bg-slate-300 text-black border-none" : "bg-slate-800 text-white border-slate-800" } border inline-block p-4 rounded my-1 max-w-[35%] break-words`}>
                {message.content}
              </div>
         )}

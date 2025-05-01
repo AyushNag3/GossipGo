@@ -28,7 +28,7 @@ export const ContactsContainer = () => {
             <Title text={"Direct Messages"}/>
             <NewDm />
           </div>
-          <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden w-full">
+          <div className="max-h-[38vh] overflow-y-auto scrollbar-hidden w-full pl-8">
            <ContactList contacts = {directMessagesContacts}  />
          </div>
          </div>

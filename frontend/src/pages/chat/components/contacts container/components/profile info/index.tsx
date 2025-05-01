@@ -19,6 +19,7 @@ export const ProfileInfo = () => {
         console.log(response)
         if (response.status === 200) {
             navigate('/auth') ; setUserinfo(null)
+            window.location.reload() 
         }
        } catch(error) {
         console.log(error)

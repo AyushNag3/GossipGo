@@ -6,20 +6,14 @@ import { Host } from "@/utils/constant"
 import { spawn } from "child_process"
 
 export const ContactList = ({contacts , isChannel = false}) => {
-    const {contact, setSelectedChatData, setSelectedChatType,setSelectedChatMessages, selectedChatData} = UseStore()
+    const { setSelectedChatData, setSelectedChatType,setSelectedChatMessages, selectedChatData} = UseStore()
     const handleClick = async(contact) => {
-        console.log(contact)
-     if (isChannel) setSelectedChatType("channel")  ;
-     else setSelectedChatType("channel") ;
-      setSelectedChatData(contact) ;
-      console.log("Chat data is : ")
-      console.log(selectedChatData)
-    //  const response = await axios.post(`${Host}/api/messages/get-messages`, {id : contact.id},
-    //                   {withCredentials : true}) ;
-     if (selectedChatData && selectedChatData.id !== contact.id) {
-        setSelectedChatMessages([])
-     }
-    // else setSelectedChatMessages(response.data.messages)
+     //  console.log(contact)
+     if (isChannel) setSelectedChatType("channel")
+        else setSelectedChatType("contact")
+    
+        setSelectedChatData(contact)
+        console.log(selectedChatData) // Log the contact data 
     }
     return <>
         <div className="mt-5 ">{ contacts.map((contact) => 
@@ -31,7 +25,7 @@ export const ContactList = ({contacts , isChannel = false}) => {
                        <Avatar className="h-12 w-12  rounded-full overflow-hidden">
                                                
                         {contact.image ? ( 
-                                    <AvatarImage src={`../../${contact.image}` || ""} alt="profile" className="object-cover w-full h-full bg-black" />
+                                    <AvatarImage src={`../../../../../images/${contact.image}` || ""} alt="profile" className="object-cover w-full h-full bg-black" />
                                 ) : (
                                     <div
                                     className={`uppercase h-12 w-12 rounded-full font-semibold  text-lg flex items-center justify-center ${getColor(contact?.color)}`}
