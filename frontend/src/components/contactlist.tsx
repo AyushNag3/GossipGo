@@ -3,7 +3,7 @@ import { Avatar,AvatarFallback,AvatarImage } from "./ui/avatar"
 import { getColor } from "@/lib/utils"
 import axios from "axios"
 import { Host } from "@/utils/constant"
-import { spawn } from "child_process"
+
 
 export const ContactList = ({contacts , isChannel = false}) => {
     const { setSelectedChatData, setSelectedChatType,setSelectedChatMessages, selectedChatData} = UseStore()

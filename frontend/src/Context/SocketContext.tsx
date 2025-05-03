@@ -34,7 +34,6 @@ export const SocketProvider = ({children}) => {
       })
   
       const handleReceiveMessage = (message: any) => {
-        
         if (
           selectedChatType !== undefined &&
           (selectedChatData?.id === message.sender?.id ||

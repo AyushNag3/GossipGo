@@ -7,17 +7,18 @@ import { Host } from "@/utils/constant";
 import { UseStore } from "@/zustand/store/store";
 import { ContactList } from "@/components/contactlist";
 export const ContactsContainer = () => {
+   
    const {directMessagesContacts, setDirectedMessagesContacts} = UseStore() 
    useEffect( () => {
        const getContacts = async() => {
           const response = await axios.get(`${Host}/api/contacts/get-contacts-for-dm`, {withCredentials : true})
-          console.log(response.data)
+         //  console.log(direct)
           if (response.data.contacts) {
             setDirectedMessagesContacts(response.data.contacts)
           }
        }
        getContacts()
-    },[directMessagesContacts])
+    },[])
     return (
      <div className="relative md:w-[35vw] lg:w-[30vw] xl:w-[20vw] bg-black border-r-2 border-[#2f303b] w-full">
         <div className="pt-3">

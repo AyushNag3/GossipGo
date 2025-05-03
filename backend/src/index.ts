@@ -4,8 +4,6 @@ import cookieParser from "cookie-parser"
 import { authRoute } from "./routes/authroutes"
 import { ContactRoutes } from "./routes/contactroutes"
 import { MessageRoutes } from "./routes/messageroutes"
-import path from "path"
-import fs from "fs"
 import { setupsocket } from "./socket"
 
 const app = express()
@@ -29,4 +27,8 @@ app.get("/", (req, res) => {
 const port = process.env.PORT || 8000 // Make sure this uses the environment variable
 const server = app.listen(port, () => console.log(`Server is listening to port ${port}`))
 
-setupsocket(server)
+try {
+  setupsocket(server);
+} catch (error) {
+  console.error("Socket setup failed:", error);
+}
