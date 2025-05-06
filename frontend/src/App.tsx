@@ -14,7 +14,7 @@ import { Skeleton } from "@/components/ui/skeleton"
 
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
-  const { userInfo, setUserinfo } = UseStore();
+  const { setUserinfo } = UseStore();
   const [loading, setLoading] = useState(true);
   const [verified, setVerified] = useState(false);
 
@@ -53,7 +53,6 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
     return <Navigate to="/auth" />;
   }
 };
-
 
 function App() {
  const {userInfo, setUserinfo} = UseStore() ;
