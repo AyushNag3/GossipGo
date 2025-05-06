@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Request, Response, NextFunction } from "express";
 import './App.css'
-import { Button } from './components/ui/button'
+
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { Auth } from './pages/auth/auth';
 import { Chat } from './pages/chat/chat';
@@ -56,12 +55,12 @@ const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
  const {userInfo, setUserinfo} = UseStore() ;
- const [loading, setloading] = useState(true) ;
+
 
  useEffect( () => {
  const getuserdata = async() => {
   try {
-    const response = await axios.get(`${Host}/${get_user_info}`,  {withCredentials: true} )
+    // const response = await axios.get(`${Host}/${get_user_info}`,  {withCredentials: true} )
     // console.log(response)
   }
   catch(error) {
@@ -72,7 +71,7 @@ function App() {
   getuserdata() ;
  }
  else {
-  setloading(false)
+ 
  }
  },[userInfo, setUserinfo])
 
