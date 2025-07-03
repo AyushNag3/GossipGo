@@ -1,6 +1,6 @@
 import { RiCloseFill } from "react-icons/ri";
 import { UseStore } from "@/zustand/store/store";
-import { Avatar,AvatarFallback,AvatarImage } from "@/components/ui/avatar";
+import { Avatar,AvatarImage } from "@/components/ui/avatar";
 import { getColor } from "@/lib/utils";
 
 export const ChatHeader = () => {

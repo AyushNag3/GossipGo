@@ -1,4 +1,4 @@
-import Lottie from "lottie-react"
+
 import { useLottie } from "lottie-react";
 import animation from "../../../../assets/animation.json"
 export const EmptyChatContainer = () => {

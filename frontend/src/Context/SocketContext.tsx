@@ -10,8 +10,8 @@ export const useSocket = () => {
     return useContext(SocketContext)
 }
 
-export const SocketProvider = ({children}) => {
-  const socket = useRef(null) ;
+export const SocketProvider = ({children} : {children : any}) => {
+  const socket : any = useRef(null) ;
   const {userInfo, selectedChatData, selectedChatType, addMessage} = UseStore()  ;
   
   useEffect(() => {
@@ -48,7 +48,7 @@ export const SocketProvider = ({children}) => {
   
     return () => {
       if (socket.current) {
-        console.log("Cleanup: Disconnecting socket...")
+        console.log("Cleanup: Disconnecting socket...") 
         socket.current.disconnect()
         socket.current = null
       }
@@ -56,7 +56,7 @@ export const SocketProvider = ({children}) => {
   }, [userInfo])
   
 
-  return (
+  return (          
     <SocketContext.Provider value={socket} > 
        {children}
     </SocketContext.Provider>

@@ -6,8 +6,8 @@ import axios from "axios";
 import { Host } from "@/utils/constant";
 
 export const MessageContainer = () => {
-      const ScrollRef = useRef(null)
-      const {selectedChatData, selectedChatType, userInfo, selectedChatMessages,setSelectedChatMessages} = UseStore()
+      const ScrollRef:any = useRef(null)
+      const {selectedChatData, selectedChatType, selectedChatMessages,setSelectedChatMessages} = UseStore()
       console.log("Messages:", selectedChatMessages);
       console.log("MessagesType:", selectedChatType);
       console.log("MessageData:", selectedChatData);
@@ -39,7 +39,7 @@ export const MessageContainer = () => {
       },[selectedChatMessages])
 
       const renderMessages = () => {
-        let lastDate = null ;
+        let lastDate:any = null ;
         return selectedChatMessages.map((message, index) => {
             const messageData = moment(message.timestamp).format("YYYY-MM-DD") ;
             const showDate = (messageData !== lastDate) ;
@@ -57,7 +57,7 @@ export const MessageContainer = () => {
         })
       };
 
-      const renderDMmessages = (message ) => (
+      const renderDMmessages = (message : any) => (
         <div className={`${message.senderId === selectedChatData.id ? "text-left" : "text-right"}`}> 
         {message.messageType === "text" && (
              <div className={`${message.senderId !== selectedChatData.id ? "bg-slate-300 text-black border-none" : "bg-slate-800 text-white border-slate-800" } border inline-block p-4 rounded my-1 max-w-[35%] break-words`}>

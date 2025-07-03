@@ -7,14 +7,13 @@ import { useNavigate } from "react-router-dom"
 import { IoLogOutOutline } from "react-icons/io5";
 import { Host } from "@/utils/constant"
 import axios from "axios"
-import { useSocket } from "@/Context/SocketContext"
+
 
 
 export const ProfileInfo = () => {
     const navigate = useNavigate()
-    const {userInfo, setUserinfo} = UseStore()
-       const socketRef = useSocket();
-    const socket = socketRef?.current;
+    const {userInfo}:{userInfo:any}= UseStore() ;
+    const {setUserinfo}  = UseStore();
 
     const Logout = async() => {
        try {

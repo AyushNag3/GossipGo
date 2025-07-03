@@ -99,7 +99,7 @@ export const Profile = () => {
    
   }
 
-  const handleImageChange = async (event) => {
+  const handleImageChange = async (event:any) => {
     const file = event.target.files[0]
     if (!file) return
 
@@ -133,11 +133,11 @@ export const Profile = () => {
     try {
       const response = await axios.post(`${Host}/api/auth/remove-profile-img`,{}, {withCredentials : true});
       if (response.status === 200 ) {
-        const updatedUser = {
+        const updatedUser:any = {
           ...userInfo, 
           image : null
         }
-        setUserinfo(updatedUser)
+        setUserinfo(updatedUser) //@ts-ignore
         setimage(null)
       }
       

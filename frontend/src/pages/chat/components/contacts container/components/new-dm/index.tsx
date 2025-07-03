@@ -1,7 +1,7 @@
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 import { useState } from "react"
 import { FaPlus } from "react-icons/fa"
-import Lottie, { useLottie } from "lottie-react";
+import Lottie from "lottie-react";
 import animation from "../../../../../../assets/animation.json"
 import { Avatar, AvatarImage } from "@/components/ui/avatar"
 import { UseStore } from "@/zustand/store/store"
@@ -12,7 +12,6 @@ import {
     DialogDescription,
     DialogHeader,
     DialogTitle,
-    DialogTrigger,
   } from "@/components/ui/dialog"
 
 import { ScrollArea } from "@/components/ui/scroll-area"
@@ -41,13 +40,8 @@ export const NewDm = () => {
        }
    }
 
-   const options = {
-    animationData: animation,
-    loop : true, 
-    autoplay : true
-  };
 
-const selectedNewContact = (contact) => {
+const selectedNewContact = (contact : any) => {
 setopennewContainerModel(false) ;
 setSelectedChatType("contact") ;
 setSelectedChatData(contact)
@@ -82,7 +76,7 @@ setSearchContact([])
                     {SearchContact.length >0 &&  (
                     <ScrollArea className="h-[250px]">
                         <div className="flex flex-col gap-5">
-                           {SearchContact.map((contact) => (
+                           {SearchContact.map((contact:any) => (
                                <div key={contact.id} className="flex gap-3 items-center cursor-pointer" onClick={()=>selectedNewContact(contact)}>
 
                         <div className="w-12 h-12 relative">

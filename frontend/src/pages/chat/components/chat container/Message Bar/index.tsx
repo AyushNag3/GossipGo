@@ -10,14 +10,14 @@ import { UseStore } from "@/zustand/store/store";
 
 export const MessageBar = () => {
     const [message, setmessage] = useState("")
-    const emojiref = useRef("")
+    const emojiref:any = useRef("")
     const [emojipick, setemojipick ]  = useState(false) 
-    const socketRef = useSocket();
+    const socketRef:any = useSocket();
     const socket = socketRef?.current;
-    const {selectedChatType, selectedChatData, userInfo, selectedChatMessages, setSelectedChatMessages} = UseStore()
+    const {selectedChatType, selectedChatData, userInfo} = UseStore()
 
     useEffect( () => {
-        function handleclickoutside(event) {
+        function handleclickoutside(event:any) {       //@ts-ignore
             if (emojiref.current && !emojiref.current.contains(event.target)) {
                 setemojipick(false) 
             }
@@ -31,7 +31,7 @@ export const MessageBar = () => {
     const handleAddEmoji = (emoji : {emoji : React.ReactNode | null }) => {
         setmessage((msg) => msg+emoji.emoji)
     }    
-    const {LIGHT,DARK,AUTO} = Theme ;
+    const {LIGHT} = Theme ;
 
     const handlesendmsg = async() => {
         
@@ -41,20 +41,20 @@ export const MessageBar = () => {
             return
           }
          if (selectedChatType === "contact") {
-            socket.emit("sendMessage" , {
+            socket.emit("sendMessage" , { //@ts-ignore
             sender : userInfo.id ,
             content : message ,
             recipient : selectedChatData.id,
             messageType : "text",
             fileUrl : undefined
          })
-           const completedatamessage = {
-            sender : userInfo.id ,
-            content : message ,
-            recipient : selectedChatData.id,
-            messageType : "text",
-            fileUrl : undefined
-           }
+        //    const completedatamessage  = {
+        //     sender : userInfo.id ,
+        //     content : message ,
+        //     recipient : selectedChatData.id,
+        //     messageType : "text",
+        //     fileUrl : undefined
+        //    }
          
          setmessage("")
         }
@@ -74,7 +74,7 @@ export const MessageBar = () => {
                <button className="text-neutral-500 hover:text-white "
                 onClick={() => emojipick === true ? setemojipick(false) : setemojipick(true)}>
                    <RiEmojiStickerFill className="text-2xl"/>
-                </button> 
+                </button>                                                 
                 <div className="absolute bottom-16 right-0" ref={emojiref}>
                     <EmojiPicker theme={LIGHT} open={emojipick} onEmojiClick={handleAddEmoji} />
                 </div>
