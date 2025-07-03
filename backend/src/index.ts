@@ -10,7 +10,7 @@ const app = express()
 app.use(express.json())
 app.use(
   cors({
-    origin: "https://gossip-go-ayush-nags-projects.vercel.app",
+   origin: ["http://localhost:5173", "https://gossip-go.vercel.app"],
     credentials: true,
   }),
 )
